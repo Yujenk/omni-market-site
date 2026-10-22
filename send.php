@@ -48,6 +48,17 @@ function encHeader(string $v): string {
     return '=?UTF-8?B?' . base64_encode(oneLine($v)) . '?=';
 }
 
+function checkPhone(string $phone): void {
+    $d = preg_replace('/\D/', '', $phone);
+    if (strlen($d) <= 1) reply(422, false, 'Укажите телефон.');
+    if (strlen($d) !== 11) reply(422, false, 'Проверьте телефон.');
+}
+
+function checkEmail(string $email): void {
+    if ($email === '') reply(422, false, 'Укажите почту.');
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) reply(422, false, 'Проверьте почту.');
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     reply(405, false, 'Форма принимает только отправку.');
 }
@@ -78,11 +89,13 @@ if ($type === 'supplier') {
     $name    = oneLine(field('name', 200));
     $phone   = oneLine(field('phone', 50));
     $email   = oneLine(field('email', 200));
-    if ($company === '' || $name === '' || ($phone === '' && $email === '')) {
-        reply(422, false, 'Укажите компанию, контактное лицо и телефон или почту.');
-    }
-    if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        reply(422, false, 'Проверьте адрес почты.');
+    if ($company === '') reply(422, false, 'Укажите компанию.');
+    if ($name === '')    reply(422, false, 'Укажите контактное лицо.');
+    checkPhone($phone);
+    checkEmail($email);
+    $inn = preg_replace('/\D/', '', field('inn', 20));
+    if ($inn !== '' && !preg_match('/^(\d{10}|\d{12})$/', $inn)) {
+        reply(422, false, 'Проверьте ИНН.');
     }
     $replyTo = $email;
     $subject = 'Заявка поставщика: ' . $company;
@@ -96,15 +109,18 @@ if ($type === 'supplier') {
         'Бренды и прайс'   => field('brands', 5000),
     ];
 } else {
-    $contact = oneLine(field('contact', 200));
-    $text    = field('text', 5000);
-    if ($contact === '' || $text === '') {
-        reply(422, false, 'Опишите, что случилось, и оставьте телефон или почту для ответа.');
-    }
-    if (filter_var($contact, FILTER_VALIDATE_EMAIL)) {
-        $replyTo = $contact;
-    }
-    $order   = oneLine(field('order', 100));
+    $order = oneLine(field('order', 100));
+    $name  = oneLine(field('name', 200));
+    $phone = oneLine(field('phone', 50));
+    $email = oneLine(field('email', 200));
+    $text  = field('text', 5000);
+    if (oneLine(field('marketplace', 100)) === '') reply(422, false, 'Укажите, где покупали.');
+    if ($order === '') reply(422, false, 'Укажите номер заказа.');
+    if (oneLine(field('type', 100)) === '') reply(422, false, 'Укажите тип обращения.');
+    if ($name === '') reply(422, false, 'Укажите имя.');
+    checkPhone($phone);
+    checkEmail($email);
+    $replyTo = $email;
     $subject = 'Обращение по заказу' . ($order !== '' ? ' ' . $order : '') . ': ' . oneLine(field('type', 100));
     $lines = [
         'Маркетплейс'       => oneLine(field('marketplace', 100)),
@@ -112,8 +128,9 @@ if ($type === 'supplier') {
         'Товар'             => oneLine(field('item', 300)),
         'Тип обращения'     => oneLine(field('type', 100)),
         'Что случилось'     => $text,
-        'Имя'               => oneLine(field('name', 200)),
-        'Телефон или почта' => $contact,
+        'Имя'               => $name,
+        'Телефон'           => $phone,
+        'Почта'             => $email,
     ];
 }
 

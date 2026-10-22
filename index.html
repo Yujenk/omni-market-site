@@ -10,647 +10,861 @@
 <meta name="description" content="Omni Market — продавец на маркетплейсах России. Сотрудничество с поставщиками и помощь покупателям по заказам.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@500&display=swap">
 <style>
+  /* ---------- Токены: светлая тема ---------- */
   :root{
-    --bg:#FFFFFF; --bg-2:#F3F4F4; --surface:#FFFFFF; --ink:#273334; --ink-2:#3C4A4B;
-    --muted:#6A7677; --line:#DDE1E1; --red:#E11D1D; --red-soft:#FCE9E9;
-    --band:#273334; --band-ink:#F3F5F5; --band-muted:#A9B4B5; --band-line:#3D4B4C;
-    --font:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    color-scheme:light;
+    --page:#ffffff; --top:#f2f2f2;
+    --ink:#1c1c1c; --text:#515151; --label:#6b6b6b; --line:#d1d9dd;
+    --card-line:#d1d9dd; --card-on-bg:rgba(166,186,200,.1); --card-on-line:#e7ecef;
+    --soft:#f2f4f5; --soft-line:#d1d9dd;
+    --hero-buyer:#ffffff; --hero-buyer-line:#d1d9dd; --hero-buyer-hover:#e7ecef; --hero-buyer-label:#515151;
+    --slate:#566a78; --slate-line:#748897; --slate-hover:#495e6c; --slate-text:#e8e8e8;
+    --red:#d10909; --err:#ac0303; --err-text:#ac0303;
+    --pop:#f2f2f2; --pop-line:#dadcdd; --pop-label:#656565;
+    --field:#8f9599; --field-on:#71777b; --ph:#898989; --field-ink:#1c1c1c; --field-label:#1c1c1c;
+    --btn2-line:#1c1c1c; --btn2-ink:#1c1c1c; --btn2-hover-bg:#e7ecef; --btn2-hover-ink:#121819;
+    --navy:#021a28; --navy-line:#303e45;
+    --foot:#121819;
+    --font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
     --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
   }
+  /* ---------- Тёмная тема ---------- */
   @media (prefers-color-scheme:dark){
     :root:not([data-theme="light"]){
       color-scheme:dark;
-      --bg:#121819; --bg-2:#192122; --surface:#1C2526; --ink:#EEF2F2; --ink-2:#D3DADA;
-      --muted:#97A3A4; --line:#2C3839; --red:#F04040; --red-soft:#3A1E1F;
-      --band:#0C1112; --band-ink:#EEF2F2; --band-muted:#97A3A4; --band-line:#253031;
+      --page:#021a28; --top:#121819;
+      --ink:#ffffff; --text:#d3d3d3; --label:#bfbfbf; --line:#303e45;
+      --card-line:#303e45; --card-on-bg:rgba(86,106,120,.2); --card-on-line:#495e6c;
+      --soft:#0c1011; --soft-line:#373737;
+      --hero-buyer:#0c1011; --hero-buyer-line:#373737; --hero-buyer-hover:#566a78; --hero-buyer-label:#bfbfbf;
+      --err-text:#ff5c5c;
+      --pop:#0c1011; --pop-line:#373737; --pop-label:#bfbfbf;
+      --field:#71777b; --field-on:#d3d3d3; --field-ink:#ffffff; --field-label:#ffffff;
+      --btn2-line:#ffffff; --btn2-ink:#ffffff; --btn2-hover-bg:#ffffff; --btn2-hover-ink:#1c1c1c;
     }
   }
-  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .brand img, :root:not([data-theme="light"]) .foot-logo{filter:invert(1) hue-rotate(180deg) brightness(1.1)} }
-  :root[data-theme="dark"] .brand img, :root[data-theme="dark"] .foot-logo{filter:invert(1) hue-rotate(180deg) brightness(1.1)}
   :root[data-theme="dark"]{
     color-scheme:dark;
-    --bg:#121819; --bg-2:#192122; --surface:#1C2526; --ink:#EEF2F2; --ink-2:#D3DADA;
-    --muted:#97A3A4; --line:#2C3839; --red:#F04040; --red-soft:#3A1E1F;
-    --band:#0C1112; --band-ink:#EEF2F2; --band-muted:#97A3A4; --band-line:#253031;
+    --page:#021a28; --top:#121819;
+    --ink:#ffffff; --text:#d3d3d3; --label:#bfbfbf; --line:#303e45;
+    --card-line:#303e45; --card-on-bg:rgba(86,106,120,.2); --card-on-line:#495e6c;
+    --soft:#0c1011; --soft-line:#373737;
+    --hero-buyer:#0c1011; --hero-buyer-line:#373737; --hero-buyer-hover:#566a78; --hero-buyer-label:#bfbfbf;
+    --err-text:#ff5c5c;
+    --pop:#0c1011; --pop-line:#373737; --pop-label:#bfbfbf;
+    --field:#71777b; --field-on:#d3d3d3; --field-ink:#ffffff; --field-label:#ffffff;
+    --btn2-line:#ffffff; --btn2-ink:#ffffff; --btn2-hover-bg:#ffffff; --btn2-hover-ink:#1c1c1c;
   }
+  /* картинки для светлой (.t-l) и тёмной (.t-d) темы */
+  .t-d{display:none!important}
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .t-l{display:none!important} :root:not([data-theme="light"]) .t-d{display:block!important} }
+  :root[data-theme="dark"] .t-l{display:none!important}
+  :root[data-theme="dark"] .t-d{display:block!important}
+
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;scroll-padding-top:72px}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--font)}
+  body{margin:0;background:var(--page);color:var(--ink);font:400 16px/24px var(--font);letter-spacing:0;-webkit-font-smoothing:antialiased}
+  img{max-width:100%}
+  a{color:inherit;text-decoration:none}
+  p,h1,h2,h3,h4{margin:0}
+  h1,h2,h3{text-wrap:balance}
+  button{font:inherit;color:inherit}
+  :focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:6px}
   .wrap{max-width:1160px;margin:0 auto;padding-inline:20px}
-  a{color:inherit}
-  :focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:4px}
-  h1,h2,h3{text-wrap:balance;margin:0}
-  p{margin:0}
-  .dot{color:var(--red)}
-  .eyebrow{font:500 12px/1 var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--muted);display:flex;align-items:center;gap:10px}
-  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--red)}
-  h2{font:800 clamp(26px,3.4vw,38px)/1.12 var(--font);letter-spacing:-.02em;margin-top:14px}
-  .sub{color:var(--muted);font-size:17px;max-width:60ch;margin-top:14px}
-  section{padding-block:72px}
-  .sec-top{margin-bottom:36px}
+  .mono{font:500 12px/16px var(--mono);letter-spacing:1px;text-transform:uppercase}
 
-  /* header */
-  .hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .hdr .wrap{display:flex;align-items:center;gap:24px;padding-block:12px}
-  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font:800 19px/1 var(--font);letter-spacing:-.01em}
-  .brand img{height:46px;width:auto;display:block}
-  .foot-logo{height:64px;width:auto;display:block;margin-bottom:14px}
-  .nav{display:flex;gap:22px;font-size:14px;color:var(--muted);margin-left:auto}
-  .nav a{text-decoration:none}
-  .nav a:hover{color:var(--ink)}
-  .hdr-cta{display:flex;gap:8px}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:999px;font:600 15px/1 var(--font);text-decoration:none;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;white-space:nowrap}
-  .btn.sm{padding:9px 14px;font-size:14px}
-  .btn.dark{background:var(--ink);color:var(--bg)}
-  .btn.red{background:var(--red);border-color:var(--red);color:#fff}
-  .btn:hover{filter:brightness(1.08)}
+  /* ---------- Шапка ---------- */
+  .hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--top);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+  .hdr .wrap{display:flex;align-items:center;gap:24px;height:70px}
+  .logo{position:relative;display:block;width:84px;height:46px;flex:none}
+  .logo img{position:absolute;display:block;max-width:none}
+  .logo .lw{left:0;right:.28%;top:77.04%;bottom:.6%;width:99.72%;height:22.36%}
+  .logo .lo{left:12.31%;top:.94%;width:34.7%;height:62.99%}
+  .logo .lm{left:53.89%;top:.94%;width:33.52%;height:63.42%}
+  .nav{margin-left:auto;display:flex;gap:22px;overflow-x:auto;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
+  .nav a,.foot-links a{position:relative;white-space:nowrap}
+  .nav a{font:400 16px/24px var(--font);color:var(--ink);padding-bottom:7px}
+  .nav a::after,.foot-links a::after{content:"";position:absolute;left:50%;bottom:0;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:var(--red);opacity:0;transform:scale(.4);transition:opacity .15s,transform .15s}
+  .nav a:hover::after,.nav a:focus-visible::after,.foot-links a:hover::after,.foot-links a:focus-visible::after{opacity:1;transform:none}
 
-  /* hero */
-  .hero{padding-block:64px 56px}
-  .hero-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:end}
-  .hero h1{font:800 clamp(36px,5.6vw,66px)/1.02 var(--font);letter-spacing:-.035em;margin-top:18px}
-  .hero .sub{font-size:19px;margin-top:20px}
+  /* ---------- Общие элементы разделов ---------- */
+  .eyebrow{display:flex;align-items:center;gap:10px;color:var(--label)}
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--red);flex:none}
+  .h2{font:800 38px/44px var(--font);margin-top:14px}
+  .h3{font:700 30px/36px var(--font)}
+  .lead{color:var(--text);max-width:680px;margin-top:24px}
+  .sec{padding-block:32px}
+  .sec-body{margin-top:36px}
+
+  /* ---------- Первый экран ---------- */
+  .top{background:var(--top)}
+  .hero{display:grid;grid-template-columns:minmax(0,561fr) minmax(0,510fr);gap:48px;align-items:end;padding-block:64px 56px}
+  .hero h1{font:800 66px/68px var(--font);padding-top:18px;max-width:562px}
+  .hero h1 .dot{color:var(--red)}
+  .hero .intro{font:400 20px/26px var(--font);color:var(--text);padding-top:28px;max-width:562px}
+  .chz{display:block;width:60px;height:26px;margin-top:20px}
   .paths{display:grid;gap:14px}
-  .path{display:grid;grid-template-columns:1fr auto;gap:6px 16px;align-items:center;padding:22px 24px;border-radius:18px;text-decoration:none;border:1.5px solid var(--line);background:var(--surface);transition:border-color .15s,transform .15s}
-  .path:hover{border-color:var(--ink);transform:translateY(-2px)}
-  .path.dark{background:var(--band);border-color:var(--band);color:var(--band-ink)}
-  .path small{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;opacity:.7}
-  .path b{font:700 22px/1.2 var(--font);grid-column:1}
-  .path span{grid-column:1;font-size:15px;opacity:.75}
-  .path .arr{grid-column:2;grid-row:1/4;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--red);color:#fff;font-size:20px}
-  @media (prefers-reduced-motion:reduce){.path{transition:none}.path:hover{transform:none}}
+  .path{display:grid;grid-template-columns:1fr 46px;column-gap:16px;row-gap:6px;align-items:center;padding:24px;border-radius:18px;border:2px solid;transition:border-color .2s,background-color .2s}
+  .path small{grid-column:1}
+  .path b{grid-column:1;font:700 22px/30px var(--font)}
+  .path span{grid-column:1;font:400 16px/24px var(--font)}
+  .path .go{grid-column:2;grid-row:2/span 2;position:relative;width:46px;height:46px;transition:transform .25s ease}
+  .path .go img{position:absolute;inset:0;width:46px;height:46px;transition:opacity .2s}
+  .path .go .h{opacity:0}
+  .path:hover .go,.path:focus-visible .go{transform:translate(3px,-3px)}
+  .path:hover .go .h,.path:focus-visible .go .h{opacity:1}
+  .path:hover .go .n,.path:focus-visible .go .n{opacity:0}
+  .path.buyer{background:var(--hero-buyer);border-color:var(--hero-buyer-line)}
+  .path.buyer small{color:var(--hero-buyer-label)}
+  .path.buyer span{color:var(--text);opacity:.75}
+  .path.buyer:hover{border-color:var(--hero-buyer-hover)}
+  .path.supplier{background:var(--slate);border-color:var(--slate-line);color:#fff}
+  .path.supplier small,.path.supplier span{color:var(--slate-text)}
+  .path.supplier:hover{border-color:var(--slate-hover)}
+  @media (prefers-reduced-motion:reduce){.path,.path .go,.mp,.cat{transition:none}}
 
-  /* stats */
-  .stats{display:grid;grid-template-columns:repeat(5,1fr);border-top:1.5px solid var(--ink);border-bottom:1px solid var(--line)}
-  .stat{padding:24px 18px 24px 0}
-  .stat+.stat{padding-left:18px;border-left:1px solid var(--line)}
-  .stat .n{font:800 clamp(24px,2.8vw,34px)/1 var(--font);white-space:nowrap;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-  .stat .l{font-size:14px;color:var(--muted);margin-top:8px}
-  .src{font:500 12px/1.5 var(--mono);color:var(--muted);margin-top:12px}
+  /* ---------- Показатели ---------- */
+  .stats-wrap{padding-bottom:20px}
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .stat{height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-inline:18px}
+  .stat+.stat{border-left:1px solid var(--line)}
+  .stat b{font:800 34px/34px var(--font);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .stat span{font:400 14px/20px var(--font);color:var(--text);padding-top:4px}
 
-  /* marketplaces */
+  /* ---------- Маркетплейсы ---------- */
   .mps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .mp-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
-  .mp-top b{font:800 22px/1.2 var(--font);letter-spacing:-.01em}
-  .rate{font:800 30px/1 var(--font);letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
-  .rate i{font-style:normal;color:var(--red);font-size:22px;margin-left:4px}
-  .mrows{border-top:1px solid var(--line);margin-top:6px}
-  .mrow{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--muted)}
-  .mrow:last-child{border-bottom:none;padding-bottom:0}
-  .mrow b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
-  .cz{display:inline-flex;align-items:center;gap:10px;margin-top:16px;font-size:15px;font-weight:600;padding:8px 14px 8px 8px;border-radius:999px;background:var(--bg-2)}
-  .cz-mark{width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:13px}
-  .mailline{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;margin-top:6px;font-size:15px;color:var(--muted)}
-  .mailline b{color:var(--ink);user-select:all}
-  .mp{display:flex;flex-direction:column;gap:10px;padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--surface);text-decoration:none}
-  a.mp:hover{border-color:var(--ink)}
-  .mp b{font:700 18px/1.2 var(--font)}
-  .mp .meta{font:500 13px/1.4 var(--mono);color:var(--muted)}
-  .tag{align-self:flex-start;font:600 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:var(--red-soft);color:var(--red)}
-  .tag.grey{background:var(--bg-2);color:var(--muted)}
+  .mp{display:flex;flex-direction:column;gap:10px;padding:24px;border-radius:18px;border:2px solid var(--card-line);transition:background-color .2s,border-color .2s}
+  .mp:hover,.mp:focus-visible{background:var(--card-on-bg);border-color:var(--card-on-line)}
+  .mp-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .mp-name{display:flex;align-items:flex-end;gap:10px;font:700 22px/30px var(--font)}
+  .mp-name img{width:24px;height:24px;margin-bottom:3px}
+  .rating{display:flex;align-items:center;gap:2px;font:800 30px/30px var(--font)}
+  .rating img{width:24px;height:24px}
+  .ext{display:inline-flex;align-items:center;gap:4px;font:500 14px/20px var(--font)}
+  .ext .ar{position:relative;width:16px;height:16px;flex:none;transition:transform .25s ease}
+  .ext .ar img{width:16px;height:16px}
+  .mp:hover .ar,.mp:focus-visible .ar,a.ext:hover .ar,a.ext:focus-visible .ar{transform:translate(2px,-2px)}
+  .mp-rows{margin-top:6px;border-top:1px solid var(--line)}
+  .mp-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+  .mp-row:last-child{border-bottom:0;padding-bottom:0}
+  .mp-row span{font:400 14px/20px var(--font);color:var(--text)}
+  .mp-row b{font:700 18px/24px var(--font);font-variant-numeric:tabular-nums}
 
-  /* categories + brands */
+  /* ---------- Категории и бренды ---------- */
   .cats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-  .cat{padding:20px;border-radius:14px;background:var(--bg-2)}
-  .cat b{display:block;font:700 17px/1.3 var(--font)}
-  .cat span{font-size:14px;color:var(--muted)}
-  .brands-h{font:700 20px/1.2 var(--font);margin:48px 0 16px}
-  .brands{display:grid;grid-template-columns:repeat(8,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-  .blogo{background:var(--surface);min-height:76px;display:grid;place-items:center;text-align:center;font:800 15px/1.15 var(--font);letter-spacing:-.01em;color:var(--ink-2);padding:10px 6px;filter:grayscale(1)}
-  .blogo.img{display:flex;gap:8px;align-items:center;justify-content:center}
-  .brands .blogo:not(.more){background:#FFFFFF;color:#3C4A4B;filter:none}
-  .blogo img{display:block;max-width:86%;max-height:34px;width:auto;height:auto}
-  .blogo.img>*{filter:grayscale(1) brightness(.32);opacity:.85;transition:filter .2s ease,opacity .2s ease}
-  .blogo.img:hover>*,.blogo.img:focus-within>*{filter:none;opacity:1}
-  @media (prefers-reduced-motion:reduce){.blogo.img>*{transition:none}}
-  .blogo.img span{font:700 15px/1 var(--font)}
-  .blogo svg{display:block;max-width:100%;height:auto;max-height:30px}
-  .blogo.more{grid-column:span 4;background:var(--ink);color:var(--bg);font:600 15px/1.2 var(--font);display:flex;gap:10px;justify-content:center;align-items:baseline}
-  .blogo.more b{font:800 28px/1 var(--font);color:var(--bg)}
+  .cat{display:flex;flex-direction:column;gap:4px;text-align:left;padding:20px;border-radius:18px;border:2px solid var(--card-line);background:transparent;cursor:pointer;transition:background-color .2s,border-color .2s}
+  .cat b{font:700 18px/normal var(--font);color:var(--ink)}
+  .cat span{font:400 14px/20px var(--font);color:var(--text)}
+  .cat:hover,.cat[aria-pressed="true"]{background:var(--card-on-bg);border-color:var(--card-on-line)}
+  .brands{display:grid;grid-template-columns:repeat(5,1fr);margin-top:48px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .brand{height:130px;display:flex;align-items:center;justify-content:center;padding-inline:18px}
+  .brand+.brand{border-left:1px solid var(--line)}
+  .brand img{display:block;max-height:64px;width:auto;height:auto;opacity:.65;filter:brightness(0);transition:opacity .3s}
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .brand img{filter:brightness(0) invert(1);opacity:.75} }
+  :root[data-theme="dark"] .brand img{filter:brightness(0) invert(1);opacity:.75}
+  .brands.fading img{opacity:0}
 
-  /* about */
-  .about{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-  .about p+p{margin-top:14px}
-  .about .text{font-size:17px;color:var(--ink-2)}
-  .facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-  .fact{background:var(--surface);padding:20px}
-  .fact small{display:block;font:500 11px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-  .fact b{display:block;font:700 18px/1.3 var(--font);margin-top:6px}
+  /* ---------- Покупателям ---------- */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .box{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:24px;border-radius:18px;background:var(--soft);border:2px solid var(--soft-line)}
+  .tag{display:inline-block;padding:6px 9px;border-radius:999px;background:var(--slate);color:#e8e8e8}
+  .box h3{font:700 22px/30px var(--font);padding-top:4px}
+  .list{margin:0;padding:0 0 0 20px;display:grid;gap:6px;font:400 14px/20px var(--font);color:var(--text)}
+  .list li{min-height:24px;padding-left:4px}
+  ul.list{list-style:none;padding-left:20px}
+  ul.list li{position:relative}
+  ul.list li::before{content:"•";position:absolute;left:-14px;top:0;line-height:20px}
+  .links{display:flex;flex-wrap:wrap;gap:12px 22px;padding-top:24px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;height:42px;padding:0 18px;border-radius:999px;font:400 14px/normal var(--font);cursor:pointer;transition:background-color .2s,color .2s,border-color .2s;white-space:nowrap}
+  .btn-2{border:2px solid var(--btn2-line);background:transparent;color:var(--btn2-ink)}
+  .btn-2:hover,.btn-2:focus-visible{background:var(--btn2-hover-bg);color:var(--btn2-hover-ink)}
+  .btn-1{border:0;background:var(--red);color:#fff;font-size:16px}
+  .btn-1:hover,.btn-1:focus-visible{background:#fff;color:#121819;box-shadow:inset 0 0 0 2px #121819}
+  .btn-1[disabled]{opacity:.6;cursor:progress}
+  .mail-note{font:400 14px/20px var(--font);color:var(--text);margin-top:6px}
+  .mail-note b{color:var(--ink)}
+  .box .cta{margin-top:6px}
 
-  /* audience bands */
-  .band{background:var(--band);color:var(--band-ink)}
-  .band .eyebrow,.band .sub{color:var(--band-muted)}
-  .band-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:40px}
-  .aud{font:800 clamp(34px,5vw,56px)/1 var(--font);letter-spacing:-.03em;margin-top:14px}
-  .offer{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--band-line);border:1px solid var(--band-line);border-radius:18px;overflow:hidden}
-  .offer div{background:var(--band);padding:24px}
-  .offer b{display:block;font:700 18px/1.3 var(--font);margin-bottom:6px}
-  .offer p{color:var(--band-muted);font-size:15px}
-  .subh{font:700 22px/1.2 var(--font);margin:56px 0 20px}
-  .models{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .model{border:1px solid var(--band-line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:8px}
-  .model b{font:700 18px/1.3 var(--font)}
-  .model p{color:var(--band-muted);font-size:15px}
-  .reqs{display:grid;grid-template-columns:1fr 1fr;gap:10px 32px;padding:0;margin:0;list-style:none}
-  .reqs li{padding:12px 0 12px 26px;border-bottom:1px solid var(--band-line);position:relative;font-size:15px}
-  .reqs li::before{content:"";position:absolute;left:4px;top:21px;width:8px;height:8px;border-radius:50%;background:var(--red)}
-  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;counter-reset:s;padding:0;margin:0;list-style:none}
-  .steps li{counter-increment:s;border-top:2px solid var(--red);padding-top:14px}
-  .steps li::before{content:"Шаг " counter(s);font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--band-muted)}
-  .steps b{display:block;font:700 17px/1.3 var(--font);margin-top:8px}
-  .steps span{display:block;font-size:14px;color:var(--band-muted);margin-top:4px}
+  .guar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+  .g{border-top:1px solid var(--line);padding-top:16px}
+  .g .mono{font-size:14px;line-height:20px;color:var(--label)}
+  .g b{display:block;font:700 22px/30px var(--font);padding-bottom:4px}
+  .g p{font:400 14px/20px var(--font);color:var(--text);padding-top:6px}
 
-  /* forms */
-  .form-card{margin-top:56px;background:var(--surface);color:var(--ink);border-radius:22px;padding:32px;display:grid;grid-template-columns:.8fr 1.2fr;gap:36px}
-  .form-card>*{min-width:0}
-  .f,.consent{min-width:0}
-  .form-card h3{font:800 26px/1.15 var(--font);letter-spacing:-.02em}
-  .form-card .aside p{color:var(--muted);margin-top:12px;font-size:15px}
-  .form-card .aside .contact-mini{margin-top:20px;font-size:15px}
-  .form-card .aside .contact-mini div{padding:10px 0;border-top:1px solid var(--line)}
-  .form-card .aside small{display:block;font:500 11px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-  form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .f{display:flex;flex-direction:column;gap:6px}
-  .f.full{grid-column:1/-1}
-  label{font-size:13px;font-weight:600;color:var(--ink-2)}
-  input,select,textarea{font:400 15px/1.4 var(--font);color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;width:100%}
-  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
-  textarea{min-height:96px;resize:vertical}
-  .consent{grid-column:1/-1;display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted)}
-  .consent input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--red)}
-  .form-foot{grid-column:1/-1;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-  .hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
-  .ok.err{color:var(--red)}
-  .ok{font-size:14px;color:var(--ink-2);background:var(--bg-2);border-radius:10px;padding:10px 14px}
-
-  /* buyers */
-  .first{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .route{border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:12px}
-  .route.main{background:var(--red-soft)}
-  .route.alt{border:1.5px solid var(--line)}
-  .route h3{font:700 21px/1.25 var(--font)}
-  .route ol,.route ul{margin:0;padding-left:20px;display:grid;gap:6px;font-size:15px;color:var(--ink-2)}
-  .route .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
-  .chip{font:500 13px/1 var(--font);padding:9px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);text-decoration:none}
-  .chip:hover{border-color:var(--ink)}
-  .warranty{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .w{border-top:1.5px solid var(--ink);padding-top:16px}
-  .w .k{font:800 30px/1 var(--font);letter-spacing:-.02em}
-  .w b{display:block;font:700 17px/1.3 var(--font);margin-top:10px}
-  .w p{color:var(--muted);font-size:15px;margin-top:6px}
+  .split{display:grid;grid-template-columns:317px minmax(0,1fr);gap:57px;align-items:start}
   .faq{border-top:1px solid var(--line)}
-  details{border-bottom:1px solid var(--line)}
-  summary{list-style:none;cursor:pointer;padding:18px 40px 18px 0;font:600 17px/1.4 var(--font);position:relative}
-  summary::-webkit-details-marker{display:none}
-  summary::after{content:"+";position:absolute;right:6px;top:14px;font:400 26px/1 var(--font);color:var(--red)}
-  details[open] summary::after{content:"–"}
-  details p{padding:0 0 18px;color:var(--ink-2);max-width:70ch}
-  .buyer-form{background:var(--bg-2)}
+  .faq details{border-bottom:1px solid var(--line)}
+  .faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:18px 40px 18px 0;font:700 16px/24px var(--font);position:relative}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq .ic{position:absolute;right:0;top:17px;width:26px;height:26px}
+  .faq .ic img{width:26px;height:26px}
+  .faq .ic .x{display:none!important;width:24px;height:24px;margin:1px}
+  .faq details[open] .ic .p{display:none!important}
+  .faq details[open] .ic .x{display:block!important}
+  .faq details p{padding:0 40px 18px 0;color:var(--text);max-width:540px;margin-top:-6px}
 
-  /* contacts */
-  .depts{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-  .dept{border:1.5px solid var(--line);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:6px}
-  .dept h3{font:800 24px/1.2 var(--font);letter-spacing:-.01em;margin-top:6px}
-  .dept > p{color:var(--muted);font-size:15px;margin-bottom:10px}
-  .row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line);flex-wrap:wrap}
-  .row small{display:block;font:500 11px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-  .row .v{font:600 16px/1.4 var(--font);user-select:all;word-break:break-word}
-  .copy{font:500 12px/1 var(--mono);border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:8px 12px;cursor:pointer}
-  .copy:hover{border-color:var(--ink)}
+  /* ---------- Поставщикам ---------- */
+  .navy{background:var(--navy);color:#fff}
+  .navy .eyebrow{color:#d3d3d3}
+  .navy .lead,.navy .muted{color:#d3d3d3}
+  .perks{display:grid;grid-template-columns:repeat(3,1fr);margin-top:40px;border-radius:18px;overflow:hidden}
+  .perk{padding:24px;border-bottom:1px solid var(--navy-line);border-right:1px solid var(--navy-line)}
+  .perk:nth-child(3n){border-right:0}
+  .perk:nth-child(n+4){border-bottom:0}
+  .perk b{display:block;font:700 16px/24px var(--font)}
+  .perk p{color:#d3d3d3;padding-top:8px}
+  .models{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+  .model{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:24px;border-radius:18px;background:var(--slate);border:2px solid var(--slate-line)}
+  .model .tag{background:#0c1011}
+  .model h4{font:700 22px/30px var(--font);padding-top:4px}
+  .model p{color:#e8e8e8}
+  .reqs{list-style:none;margin:0;padding:0;border-top:1px solid var(--navy-line)}
+  .reqs li{display:flex;align-items:center;gap:24px;min-height:60px;padding:18px 40px 18px 0;border-bottom:1px solid var(--navy-line)}
+  .reqs li img{width:7px;height:7px;flex:none}
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:24px 0 0;padding:0;list-style:none}
+  .steps li{border-top:1px solid var(--navy-line);padding-top:16px}
+  .steps .mono{font-size:16px;line-height:24px;color:#d3d3d3}
+  .steps b{display:block;font:700 22px/30px var(--font);padding-bottom:4px}
+  .steps p{color:#d3d3d3;padding-top:6px}
 
-  footer{background:var(--bg-2);padding-block:36px;font-size:14px;color:var(--muted)}
-  .foot{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
-  .foot b{display:block;color:var(--ink);margin-bottom:8px;font-weight:700}
-  .foot a{display:block;text-decoration:none;padding:3px 0}
-  .foot a:hover{color:var(--ink)}
-  .legal{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);font-size:13px}
+  /* ---------- Формы ---------- */
+  .formcard{display:grid;grid-template-columns:minmax(0,1fr) 612px;gap:32px;padding:32px;border-radius:22px}
+  .formcard.dark{background:#0c1011;border:2px solid #373737;margin-top:40px}
+  .formcard h3{font:700 30px/36px var(--font)}
+  .info p{padding-top:12px;max-width:408px}
+  .info dl{margin:20px 0 0;max-width:408px}
+  .info dl div{padding:10px 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+  .info dl div:last-child{border-bottom:1px solid var(--line)}
+  .info dt{color:var(--pop-label)}
+  .info dd{margin:0;font:700 16px/24px var(--font)}
+  .formcard.dark .info dl div{border-color:#373737}
+  .formcard.dark .info dt{color:#bfbfbf}
+  form{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-content:start}
+  .f{display:flex;flex-direction:column;gap:6px;min-width:0}
+  .f.full,.consent,.form-foot,.ok{grid-column:1/-1}
+  .f label{font:500 14px/normal var(--font);color:var(--field-label)}
+  .dark-form .f label{font:500 16px/24px var(--font);color:#fff}
+  .inp{width:100%;height:46px;padding:11px 12px;border:2px solid var(--field);border-radius:10px;background:transparent;color:var(--field-ink);font:400 16px/22px var(--font);outline:none;transition:border-color .15s}
+  textarea.inp{height:96px;min-height:96px;resize:vertical}
+  .inp::placeholder{color:var(--ph)}
+  .inp:focus{border-color:var(--field-on)}
+  .inp[aria-invalid="true"]{border-color:var(--err)}
+  select.inp{appearance:none;-webkit-appearance:none;padding-left:15.5px;padding-right:40px;background:transparent url(img/chevron-dark.svg) no-repeat right 12px center/24px 24px;cursor:pointer}
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) select.inp{background-image:url(img/chevron-light.svg)} }
+  :root[data-theme="dark"] select.inp{background-image:url(img/chevron-light.svg)}
+  select.inp option{color:#1c1c1c}
+  input[type="file"].inp{height:48px;padding:8px 10px;font-size:14px;color:var(--text);cursor:pointer}
+  input[type="file"].inp::file-selector-button{margin-right:10px;padding:5px 12px;border:1px solid var(--field);border-radius:999px;background:transparent;color:var(--field-ink);font:400 14px/20px var(--font);cursor:pointer}
+  .dark-form .inp{border-color:#71777b;color:#fff}
+  .dark-form .inp:focus{border-color:#d3d3d3}
+  .dark-form .inp[aria-invalid="true"]{border-color:var(--err)}
+  .dark-form select.inp{background-image:url(img/chevron-light.svg)}
+  .err{font:400 14px/20px var(--font);color:var(--err-text)}
+  .dark-form .err{color:#ff5c5c}
+  .consent{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+  .consent .txt{font:400 14px/20.8px var(--font);color:var(--text)}
+  .dark-form .consent .txt{font-size:16px;line-height:24px;color:#d3d3d3}
+  .consent a{text-decoration:underline;text-underline-offset:2px}
+  .box-check{appearance:none;-webkit-appearance:none;flex:none;width:18px;height:18px;margin:2px 3px 3px 4px;border:1px solid #71777b;border-radius:4px;background:#fff;cursor:pointer;display:grid;place-items:center}
+  .box-check:checked{background:var(--red) url(img/check.svg) no-repeat center/12px 12px;border-color:#f04040}
+  .box-check[aria-invalid="true"]{border-color:var(--err)}
+  .ok{padding-top:12px;font:400 16px/24px var(--font)}
+  .ok.is-err{color:var(--err-text)}
+  .hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
 
-  @media (max-width:980px){
-    .nav{display:none}
-    .hdr-cta{margin-left:auto}
-    .hero-grid,.about,.form-card,.first{grid-template-columns:1fr}
-    .stats{grid-template-columns:repeat(3,1fr)}
-    .stat:nth-child(4){border-left:none;padding-left:0}
-    .stat:nth-child(n+4){border-top:1px solid var(--line)}
-    .mps,.cats{grid-template-columns:1fr 1fr}
-    .brands{grid-template-columns:repeat(4,1fr)}
-    .mps{grid-template-columns:1fr}
-    .offer,.models,.warranty{grid-template-columns:1fr}
-    .steps{grid-template-columns:1fr 1fr}
-    .depts,.foot{grid-template-columns:1fr}
+  /* ---------- Поп-ап ---------- */
+  .modal{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;background:rgba(2,10,14,.55);overflow-y:auto;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s}
+  .modal.open{opacity:1;visibility:visible}
+  .pop{position:relative;width:100%;max-width:1120px;background:var(--pop);border:2px solid var(--pop-line);border-radius:22px;margin:auto}
+  .pop-head{display:flex;justify-content:flex-end;padding:16px 32px}
+  .x-btn{width:24px;height:24px;padding:0;border:0;background:none;cursor:pointer}
+  .x-btn img{width:24px;height:24px}
+  .pop .formcard{grid-template-columns:minmax(0,1fr) 612px;gap:36px;padding:32px;padding-top:16px}
+  .pop .formcard h3{line-height:normal}
+  body.locked{overflow:hidden}
+
+  /* ---------- О компании ---------- */
+  .about{display:grid;grid-template-columns:600px minmax(0,1fr);gap:40px}
+  .about .h2 br{display:inline}
+  .about-text p{color:var(--text)}
+  .about-text p+p{padding-top:14px}
+  .facts{display:grid;grid-template-columns:1fr 1fr;width:480px;max-width:100%;margin-top:24px}
+  .fact{padding:20px;display:flex;flex-direction:column;gap:4px}
+  .fact:nth-child(1){border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .fact:nth-child(2){border-bottom:1px solid var(--line)}
+  .fact:nth-child(3){border-right:1px solid var(--line)}
+  .fact .mono{color:var(--label)}
+  .fact b{font:700 22px/30px var(--font)}
+
+  /* ---------- Контакты ---------- */
+  .contacts{padding-bottom:50px}
+  .ccard{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:24px;border-radius:22px;border:2px solid}
+  .ccard.buyer{background:var(--soft);border-color:var(--soft-line)}
+  .ccard.supplier{background:var(--slate);border-color:var(--slate-line);color:#fff}
+  .ccard .mono{color:var(--label)}
+  .ccard.supplier .mono,.ccard.supplier p{color:#e8e8e8}
+  .ccard h3{font:700 22px/30px var(--font);padding-top:6px}
+  .ccard > p{color:var(--text);padding-bottom:10px}
+  .ccard dl{margin:20px 0 0;width:100%}
+  .ccard dl div{border-top:1px solid var(--line);padding:10px 0;display:flex;flex-direction:column;gap:4px}
+  .ccard.supplier dl div{border-color:var(--slate-line)}
+  .ccard dd{margin:0;font:700 16px/24px var(--font);word-break:break-word}
+
+  /* ---------- Подвал ---------- */
+  .foot{background:var(--foot);color:#fff;padding-block:36px}
+  .foot-grid{display:grid;grid-template-columns:434fr 310fr 310fr;gap:32px}
+  .foot .logo{width:142px;height:78px}
+  .foot address{font:400 14px/20px var(--font);font-style:normal;color:#d3d3d3;margin-top:16px}
+  .foot h4{font:700 16px/24px var(--font)}
+  .foot-links{display:flex;flex-direction:column;align-items:flex-start;padding-top:8px}
+  .foot-links a{font:400 14px/20px var(--font);padding:4px 0 7px;display:inline-flex;align-items:center;gap:4px}
+  .foot-links a::after{bottom:-3px}
+  .foot-links.ext-links a::after{display:none}
+  .foot-links .ar{position:relative;width:16px;height:16px;transition:transform .25s ease}
+  .foot-links a:hover .ar,.foot-links a:focus-visible .ar{transform:translate(2px,-2px)}
+  .legal{margin-top:28px;padding-top:18px;border-top:1px solid #303e45;font:400 12px/16px var(--font);color:#d3d3d3}
+  .legal a:hover{color:#fff;text-decoration:underline}
+
+  /* ---------- Адаптив ---------- */
+  @media (max-width:1100px){
+    .hero{grid-template-columns:1fr;gap:36px}
+    .hero h1{font-size:54px;line-height:58px}
+    .formcard,.pop .formcard{grid-template-columns:1fr}
+    .about{grid-template-columns:minmax(0,1fr)}
   }
-  @media (max-width:560px){
-    section{padding-block:52px}
-    .hdr-cta .btn.hide-sm{display:none}
-    .brand span{display:none}
-    .stats{grid-template-columns:1fr 1fr}
-    .stat:nth-child(n){border-left:none;padding-left:0;border-top:1px solid var(--line)}
-    .stat:nth-child(1),.stat:nth-child(2){border-top:none}
-    .stat:nth-child(even){padding-left:16px;border-left:1px solid var(--line)}
-    .reqs,form{grid-template-columns:1fr}
-    .steps{grid-template-columns:1fr}
-    .form-card{padding:22px}
+  @media (max-width:900px){
+    .stats{grid-template-columns:repeat(3,1fr)}
+    .stat:nth-child(4){border-left:0}
+    .stat:nth-child(n+4){border-top:1px solid var(--line)}
+    .mps,.duo,.guar,.models{grid-template-columns:1fr}
+    .cats{grid-template-columns:1fr 1fr}
     .brands{grid-template-columns:repeat(3,1fr)}
-    .blogo{font-size:13px;min-height:60px}
-    .blogo.more{grid-column:span 3}
+    .brand:nth-child(4){border-left:0}
+    .brand:nth-child(n+4){border-top:1px solid var(--line)}
+    .split{grid-template-columns:1fr;gap:24px}
+    .perks{grid-template-columns:1fr 1fr}
+    .perk{border-right:1px solid var(--navy-line)!important;border-bottom:1px solid var(--navy-line)!important}
+    .perk:nth-child(2n){border-right:0!important}
+    .perk:nth-child(n+5){border-bottom:0!important}
+    .steps{grid-template-columns:1fr 1fr}
+    .foot-grid{grid-template-columns:1fr 1fr}
+    .foot-grid > div:first-child{grid-column:1/-1}
+  }
+  @media (max-width:640px){
+    .hdr .wrap{gap:16px}
+    .nav{gap:16px}
+    .nav a{font-size:15px}
+    .hero{padding-block:40px}
+    .hero h1{font-size:40px;line-height:44px}
+    .hero .intro{font-size:18px;line-height:24px}
+    .h2{font-size:30px;line-height:36px}
+    .h3,.formcard h3{font-size:26px;line-height:32px}
+    .path{padding:20px}
+    .path b{font-size:20px;line-height:26px}
+    .stats{grid-template-columns:1fr 1fr}
+    .stat{height:110px}
+    .stat:nth-child(n){border-left:0;border-top:1px solid var(--line)}
+    .stat:nth-child(1),.stat:nth-child(2){border-top:0}
+    .stat:nth-child(even){border-left:1px solid var(--line)}
+    .stat b{font-size:28px;line-height:30px}
+    .cats{grid-template-columns:1fr}
+    .brands{grid-template-columns:1fr 1fr}
+    .brand{height:100px}
+    .brand:nth-child(n){border-left:0;border-top:1px solid var(--line)}
+    .brand:nth-child(1),.brand:nth-child(2){border-top:0}
+    .brand:nth-child(even){border-left:1px solid var(--line)}
+    .perks{grid-template-columns:1fr}
+    .perk{border-right:0!important;border-bottom:1px solid var(--navy-line)!important}
+    .perk:last-child{border-bottom:0!important}
+    .steps{grid-template-columns:1fr}
+    form{grid-template-columns:1fr}
+    .formcard,.pop .formcard{padding:22px}
+    .pop-head{padding:14px 20px 0}
+    .modal{padding:12px}
+    .foot-grid{grid-template-columns:1fr}
+    .mp-name{font-size:20px}
   }
 </style>
 </head>
 <body>
 
-
 <header class="hdr">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Omni Market — на главную"><img src="data:image/png;base64,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" alt="omni.market" width="85" height="46"></a>
+    <a class="logo" href="#top" aria-label="Omni Market — на главную">
+      <img class="lw t-l" src="img/logo-dark-word.svg" alt=""><img class="lo t-l" src="img/logo-dark-o.svg" alt=""><img class="lm t-l" src="img/logo-dark-m.svg" alt="">
+      <img class="lw t-d" src="img/logo-light-word.svg" alt=""><img class="lo t-d" src="img/logo-light-o.svg" alt=""><img class="lm t-d" src="img/logo-light-m.svg" alt="">
+    </a>
     <nav class="nav" aria-label="Разделы">
       <a href="#assortment">Ассортимент</a>
-      <a href="#contacts">Контакты</a>
+      <a href="#buyers">Покупателям</a>
+      <a href="#suppliers">Поставщикам</a>
       <a href="#about">О компании</a>
+      <a href="#contacts">Контакты</a>
     </nav>
-    <div class="hdr-cta">
-      <a class="btn sm dark" href="#buyers">Покупателям</a>
-      <a class="btn sm hide-sm" href="#suppliers">Поставщикам</a>
-    </div>
   </div>
 </header>
 
 <main id="top">
-  <!-- 1. Первый экран -->
-  <div class="wrap hero">
-    <div class="hero-grid">
+  <!-- Первый экран -->
+  <div class="top">
+    <div class="wrap hero">
       <div>
-        <div class="eyebrow">Продавец на маркетплейсах России с 2020 года</div>
         <h1>Продаём товары брендов на крупнейших маркетплейсах<span class="dot">.</span></h1>
-        <p class="sub">В ассортименте 100 000+ товаров. Работаем только с оригинальной продукцией и полным пакетом документов.</p>
-        <p class="cz"><span class="cz-mark" aria-hidden="true">✓</span>Честный знак</p>
+        <p class="intro">В ассортименте 100 000+ товаров. Работаем только с оригинальной продукцией и полным пакетом документов.</p>
+        <img class="chz" src="img/chz.png" alt="Честный знак" width="60" height="26">
       </div>
       <div class="paths">
-        <a class="path dark" href="#buyers">
-          <small>Покупателям</small>
+        <a class="path buyer" href="#buyers">
+          <small class="mono">Покупателям</small>
           <b>Я купил товар на маркетплейсе</b>
           <span>Возврат, брак, гарантия, вопросы по заказу</span>
-          <i class="arr" aria-hidden="true">→</i>
+          <i class="go" aria-hidden="true">
+            <img class="n t-l" src="img/btn-arrow-light.svg" alt=""><img class="h t-l" src="img/btn-arrow-light-hover.svg" alt="">
+            <img class="n t-d" src="img/btn-arrow-dark.svg" alt=""><img class="h t-d" src="img/btn-arrow-dark-hover.svg" alt="">
+          </i>
         </a>
-        <a class="path" href="#suppliers">
-          <small>Поставщикам</small>
-          <b>Я производитель или дистрибьютор</b>
+        <a class="path supplier" href="#suppliers">
+          <small class="mono">Поставщикам</small>
+          <b>Я производитель<br>или дистрибьютор</b>
           <span>Условия работы и заявка на сотрудничество</span>
-          <i class="arr" aria-hidden="true">→</i>
+          <i class="go" aria-hidden="true">
+            <img class="n" src="img/btn-arrow-dark.svg" alt=""><img class="h" src="img/btn-arrow-dark-hover.svg" alt="">
+          </i>
         </a>
+      </div>
+    </div>
+
+    <!-- Ключевые показатели -->
+    <div class="wrap stats-wrap">
+      <div class="stats" aria-label="Ключевые показатели">
+        <div class="stat"><b>100 000+</b><span>товаров в ассортименте</span></div>
+        <div class="stat"><b>600+</b><span>брендов</span></div>
+        <div class="stat"><b>1 млрд ₽</b><span>оборот за год</span></div>
+        <div class="stat"><b>3</b><span>крупнейших маркетплейса</span></div>
+        <div class="stat"><b>2020</b><span>год начала продаж</span></div>
       </div>
     </div>
   </div>
 
-  <!-- 2. Цифры -->
-  <div class="wrap">
-    <div class="stats" aria-label="Ключевые показатели">
-      <div class="stat"><div class="n">100 000+</div><div class="l">товаров в ассортименте</div></div>
-      <div class="stat"><div class="n">600+</div><div class="l">брендов</div></div>
-      <div class="stat"><div class="n">1 млрд ₽</div><div class="l">оборот за год</div></div>
-      <div class="stat"><div class="n">3</div><div class="l">крупнейших маркетплейса</div></div>
-      <div class="stat"><div class="n">2020</div><div class="l">год начала продаж</div></div>
-    </div>
-  </div>
-
-  <!-- 3. Площадки -->
-  <section class="wrap" id="platforms">
-    <div class="sec-top">
-      <div class="eyebrow">Площадки</div>
-      <h2>Где нас найти</h2>
-      <p class="sub">Рейтинг и отзывы о нашем магазине можно проверить на каждой площадке.</p>
-    </div>
-    <div class="mps">
+  <!-- Маркетплейсы -->
+  <section class="wrap sec" id="platforms">
+    <p class="eyebrow mono">Площадки</p>
+    <h2 class="h2">Где нас найти</h2>
+    <p class="lead">Рейтинг и отзывы о нашем магазине можно проверить на каждой площадке.</p>
+    <div class="mps sec-body">
       <a class="mp" href="https://www.wildberries.ru/seller/82591" target="_blank" rel="noopener">
-        <div class="mp-top"><b>Wildberries</b><span class="rate">4,7<i aria-hidden="true">★</i></span></div>
-        <span class="meta">Магазин на Wildberries ↗</span>
-        <div class="mrows"><div class="mrow"><span>Продано товаров</span><b>100 000+</b></div><div class="mrow"><span>Оценок покупателей</span><b>20 000+</b></div><div class="mrow"><span>На площадке</span><b>6 лет</b></div></div>
+        <div class="mp-top"><span class="mp-name"><img src="img/mp-wb.png" alt="">Wildberries</span><span class="rating">4,7<img src="img/star.svg" alt="из 5"></span></div>
+        <span class="ext">Магазин на Wildberries<i class="ar"><img class="t-l" src="img/arrow-sm-dark.svg" alt=""><img class="t-d" src="img/arrow-sm-light.svg" alt=""></i></span>
+        <div class="mp-rows">
+          <div class="mp-row"><span>Продано товаров</span><b>100 000+</b></div>
+          <div class="mp-row"><span>Оценок покупателей</span><b>20 000+</b></div>
+          <div class="mp-row"><span>На площадке</span><b>с 2020</b></div>
+        </div>
       </a>
       <a class="mp" href="https://www.ozon.ru/seller/tekki-market/" target="_blank" rel="noopener">
-        <div class="mp-top"><b>Ozon</b><span class="rate">4,7<i aria-hidden="true">★</i></span></div>
-        <span class="meta">Магазин Tekki Market ↗</span>
-        <div class="mrows"><div class="mrow"><span>Заказов</span><b>15 000+</b></div><div class="mrow"><span>Оценок покупателей</span><b>5 000+</b></div><div class="mrow"><span>На площадке</span><b>1 год</b></div></div>
+        <div class="mp-top"><span class="mp-name"><img src="img/mp-ozon.png" alt="">Ozon</span><span class="rating">4,7<img src="img/star.svg" alt="из 5"></span></div>
+        <span class="ext">Магазин Tekki Market<i class="ar"><img class="t-l" src="img/arrow-sm-dark.svg" alt=""><img class="t-d" src="img/arrow-sm-light.svg" alt=""></i></span>
+        <div class="mp-rows">
+          <div class="mp-row"><span>Заказов</span><b>15 000+</b></div>
+          <div class="mp-row"><span>Оценок покупателей</span><b>5 000+</b></div>
+          <div class="mp-row"><span>На площадке</span><b>с 2025</b></div>
+        </div>
       </a>
       <a class="mp" href="https://market.yandex.ru/business--omni-market/187425633" target="_blank" rel="noopener">
-        <div class="mp-top"><b>Яндекс Маркет</b><span class="rate">4,6<i aria-hidden="true">★</i></span></div>
-        <span class="meta">Магазин Omni Market ↗</span>
-        <div class="mrows"><div class="mrow"><span>Заказов</span><b>13 700</b></div><div class="mrow"><span>Оценок покупателей</span><b>3 700</b></div><div class="mrow"><span>На площадке</span><b>1 год</b></div></div>
+        <div class="mp-top"><span class="mp-name"><img src="img/mp-ym.png" alt="">Яндекс Маркет</span><span class="rating">4,6<img src="img/star.svg" alt="из 5"></span></div>
+        <span class="ext">Магазин Omni Market<i class="ar"><img class="t-l" src="img/arrow-sm-dark.svg" alt=""><img class="t-d" src="img/arrow-sm-light.svg" alt=""></i></span>
+        <div class="mp-rows">
+          <div class="mp-row"><span>Заказов</span><b>13 700</b></div>
+          <div class="mp-row"><span>Оценок покупателей</span><b>3 700</b></div>
+          <div class="mp-row"><span>На площадке</span><b>с 2025</b></div>
+        </div>
       </a>
     </div>
   </section>
 
-  <!-- 4. Категории и бренды -->
-  <section class="wrap" id="assortment" style="padding-top:0">
-    <div class="sec-top">
-      <div class="eyebrow">Ассортимент</div>
-      <h2>Категории и бренды</h2>
-      
+  <!-- Категории и бренды -->
+  <section class="wrap sec" id="assortment">
+    <p class="eyebrow mono">Ассортимент</p>
+    <h2 class="h2">Категории и бренды</h2>
+    <p class="lead" style="max-width:650px">В нашем портфеле — более 600 брендов: от глобальных лидеров индустрии до любимых локальных марок. Мы собрали лучшие товары для дома, работы и отдыха в одном месте.</p>
+    <div class="cats sec-body" role="group" aria-label="Категории">
+      <button class="cat" type="button" data-cat="1" aria-pressed="true"><b>Бытовая техника</b><span>Для кухни и дома</span></button>
+      <button class="cat" type="button" data-cat="2" aria-pressed="false"><b>Электроника</b><span>Гаджеты и аксессуары</span></button>
+      <button class="cat" type="button" data-cat="3" aria-pressed="false"><b>Товары для дома</b><span>Посуда, текстиль, хранение</span></button>
+      <button class="cat" type="button" data-cat="4" aria-pressed="false"><b>Красота и здоровье</b><span>Уход и приборы</span></button>
+      <button class="cat" type="button" data-cat="5" aria-pressed="false"><b>Дача и сад</b><span>Инструмент и инвентарь</span></button>
+      <button class="cat" type="button" data-cat="6" aria-pressed="false"><b>Спорт и отдых</b><span>Инвентарь и аксессуары</span></button>
+      <button class="cat" type="button" data-cat="7" aria-pressed="false"><b>Автотовары</b><span>Аксессуары и уход</span></button>
     </div>
-    <div class="cats">
-      <div class="cat"><b>Бытовая техника</b><span>Для кухни и дома</span></div>
-      <div class="cat"><b>Электроника</b><span>Гаджеты и аксессуары</span></div>
-      <div class="cat"><b>Товары для дома</b><span>Посуда, текстиль, хранение</span></div>
-      <div class="cat"><b>Красота и здоровье</b><span>Уход и приборы</span></div>
-      <div class="cat"><b>Дача и сад</b><span>Инструмент и инвентарь</span></div>
-            <div class="cat"><b>Спорт и отдых</b><span>Инвентарь и аксессуары</span></div>
-      <div class="cat"><b>Автотовары</b><span>Аксессуары и уход</span></div>
-    </div>
-    <h3 class="brands-h">Бренды, которые мы представляем</h3>
-    <div class="brands"><div class="blogo">Аквафор</div><div class="blogo">Бирюса</div><div class="blogo">Заря</div><div class="blogo">НИКА</div><div class="blogo">Рыжий кот</div><div class="blogo img" title="ЯНДЕКС"><img src="logos/yandex.svg" alt="ЯНДЕКС" loading="lazy"></div><div class="blogo img" title="APPLE"><img src="logos/apple.svg" alt="APPLE" loading="lazy"></div><div class="blogo img" title="ASUS"><img src="logos/asus.svg" alt="ASUS" loading="lazy"></div><div class="blogo">ATLANT</div><div class="blogo">BBK</div><div class="blogo img" title="BOSCH"><img src="logos/bosch.svg" alt="BOSCH" loading="lazy"></div><div class="blogo img" title="CANDY"><img src="logos/candy.svg" alt="CANDY" loading="lazy"></div><div class="blogo img" title="CANON"><img src="logos/canon.svg" alt="CANON" loading="lazy"></div><div class="blogo img" title="D-LINK"><img src="logos/d-link.svg" alt="D-LINK" loading="lazy"></div><div class="blogo img" title="DAEWOO"><img src="logos/daewoo.svg" alt="DAEWOO" loading="lazy"></div><div class="blogo">DEERMA</div><div class="blogo">Defender</div><div class="blogo img" title="EPSON"><img src="logos/epson.svg" alt="EPSON" loading="lazy"></div><div class="blogo">Eurolux</div><div class="blogo">GAUSS</div><div class="blogo img" title="Gorenje"><img src="logos/gorenje.svg" alt="Gorenje" loading="lazy"></div><div class="blogo img" title="Haier"><img src="logos/haier.svg" alt="Haier" loading="lazy"></div><div class="blogo img" title="HISENSE"><img src="logos/hisense.svg" alt="HISENSE" loading="lazy"></div><div class="blogo img" title="HONOR"><img src="logos/honor.svg" alt="HONOR" loading="lazy"></div><div class="blogo img" title="HUAWEI"><svg viewBox="-0.20 2.76 24.40 18.48" width="34.3" height="26" aria-hidden="true"><path fill="#FF0000" d="M3.67 6.14S1.82 7.91 1.72 9.78v.35c.08 1.51 1.22 2.4 1.22 2.4 1.83 1.79 6.26 4.04 7.3 4.55 0 0 .06.03.1-.01l.02-.04v-.04C7.52 10.8 3.67 6.14 3.67 6.14zM9.65 18.6c-.02-.08-.1-.08-.1-.08l-7.38.26c.8 1.43 2.15 2.53 3.56 2.2.96-.25 3.16-1.78 3.88-2.3.06-.05.04-.09.04-.09zm.08-.78C6.49 15.63.21 12.28.21 12.28c-.15.46-.2.9-.21 1.3v.07c0 1.07.4 1.82.4 1.82.8 1.69 2.34 2.2 2.34 2.2.7.3 1.4.31 1.4.31.12.02 4.4 0 5.54 0 .05 0 .08-.05.08-.05v-.06c0-.03-.03-.05-.03-.05zM9.06 3.19a3.42 3.42 0 00-2.57 3.15v.41c.03.6.16 1.05.16 1.05.66 2.9 3.86 7.65 4.55 8.65.05.05.1.03.1.03a.1.1 0 00.06-.1c1.06-10.6-1.11-13.42-1.11-13.42-.32.02-1.19.23-1.19.23zm8.299 2.27s-.49-1.8-2.44-2.28c0 0-.57-.14-1.17-.22 0 0-2.18 2.81-1.12 13.43.01.07.06.08.06.08.07.03.1-.03.1-.03.72-1.03 3.9-5.76 4.55-8.64 0 0 .36-1.4.02-2.34zm-2.92 13.07s-.07 0-.09.05c0 0-.01.07.03.1.7.51 2.85 2 3.88 2.3 0 0 .16.05.43.06h.14c.69-.02 1.9-.37 3-2.26l-7.4-.25zm7.83-8.41c.14-2.06-1.94-3.97-1.94-3.98 0 0-3.85 4.66-6.67 10.8 0 0-.03.08.02.13l.04.01h.06c1.06-.53 5.46-2.77 7.28-4.54 0 0 1.15-.93 1.21-2.42zm1.52 2.14s-6.28 3.37-9.52 5.55c0 0-.05.04-.03.11 0 0 .03.06.07.06 1.16 0 5.56 0 5.67-.02 0 0 .57-.02 1.27-.29 0 0 1.56-.5 2.37-2.27 0 0 .73-1.45.17-3.14z"/></svg><span style="color:#FF0000">HUAWEI</span></div><div class="blogo img" title="Hyundai"><img src="logos/hyundai.svg" alt="Hyundai" loading="lazy"></div><div class="blogo img" title="INDESIT"><img src="logos/indesit.svg" alt="INDESIT" loading="lazy"></div><div class="blogo img" title="JBL"><img src="logos/jbl.svg" alt="JBL" loading="lazy"></div><div class="blogo img" title="KARCHER"><img src="logos/karcher.svg" alt="KARCHER" loading="lazy"></div><div class="blogo img" title="Keenetic"><svg viewBox="-0.20 2.18 24.40 19.65" width="32.3" height="26" aria-hidden="true"><path fill="#009EE2" d="M15.718 10.188 24 2.376h-6.588L9.788 9.812H4.33V2.376H0v19.248h4.33V14.14h7.623c3.2 0 5.412.706 6.588 2.07.706.8 1.035 1.883 1.035 3.248v2.165h4.33v-2.165c0-2.353-.706-4.424-2.07-6.024-1.46-1.647-3.483-2.776-6.118-3.247"/></svg><span style="color:#009EE2">Keenetic</span></div><div class="blogo img" title="Kenwood"><img src="logos/kenwood.svg" alt="Kenwood" loading="lazy"></div><div class="blogo">KITFORT</div><div class="blogo img" title="LG"><img src="logos/lg.svg" alt="LG" loading="lazy"></div><div class="blogo">MATRIX</div><div class="blogo">MAXWELL</div><div class="blogo img" title="MIDEA"><img src="logos/midea.svg" alt="MIDEA" loading="lazy"></div><div class="blogo img" title="MOULINEX"><img src="logos/moulinex.svg" alt="MOULINEX" loading="lazy"></div><div class="blogo">Neva</div><div class="blogo img" title="PANASONIC"><img src="logos/panasonic.svg" alt="PANASONIC" loading="lazy"></div><div class="blogo img" title="Philips"><img src="logos/philips.svg" alt="Philips" loading="lazy"></div><div class="blogo img" title="Pioneer"><img src="logos/pioneer.svg" alt="Pioneer" loading="lazy"></div><div class="blogo">POLARIS</div><div class="blogo">PROLOGY</div><div class="blogo img" title="Realme"><img src="logos/realme.svg" alt="Realme" loading="lazy"></div><div class="blogo">REDMOND</div><div class="blogo img" title="ROWENTA"><img src="logos/rowenta.svg" alt="ROWENTA" loading="lazy"></div><div class="blogo img" title="SAMSUNG"><svg viewBox="-0.20 9.97 24.40 4.07" width="103.8" height="17.3" role="img" aria-label="SAMSUNG"><path fill="#1428A0" d="M19.8166 10.2808l.0459 2.6934h-.023l-.7793-2.6934h-1.2837v3.3925h.8481l-.0458-2.785h.023l.8366 2.785h1.2264v-3.3925zm-16.149 0l-.6418 3.427h.9284l.4699-3.1175h.0229l.4585 3.1174h.9169l-.6304-3.4269zm5.1805 0l-.424 2.6132h-.023l-.424-2.6132H6.5788l-.0688 3.427h.8596l.023-3.0832h.0114l.573 3.0831h.8711l.5731-3.083h.023l.0228 3.083h.8596l-.0802-3.4269zm-7.2664 2.4527c.0343.0802.0229.1949.0114.2522-.0229.1146-.1031.2292-.3324.2292-.2177 0-.3438-.126-.3438-.3095v-.3323H0v.2636c0 .7679.6074.9971 1.2493.9971.6189 0 1.1346-.2178 1.2149-.7794.0458-.298.0114-.4928 0-.5616-.1605-.722-1.467-.9283-1.5588-1.3295-.0114-.0688-.0114-.1375 0-.1834.023-.1146.1032-.2292.3095-.2292.2063 0 .321.126.321.3095v.2063h.8595v-.2407c0-.745-.6762-.8596-1.1576-.8596-.6074 0-1.1117.2063-1.2034.7564-.023.149-.0344.2866.0114.4585.1376.7106 1.364.9169 1.5358 1.3524m11.152 0c.0343.0803.0228.1834.0114.2522-.023.1146-.1032.2292-.3324.2292-.2178 0-.3438-.126-.3438-.3095v-.3323h-.917v.2636c0 .7564.596.9857 1.2379.9857.6189 0 1.1232-.2063 1.2034-.7794.0459-.298.0115-.4814 0-.5616-.1375-.7106-1.4327-.9284-1.5243-1.318-.0115-.0688-.0115-.1376 0-.1835.0229-.1146.1031-.2292.3094-.2292.1948 0 .321.126.321.3095v.2063h.848v-.2407c0-.745-.6647-.8596-1.146-.8596-.6075 0-1.1004.1948-1.192.7564-.023.149-.023.2866.0114.4585.1376.7106 1.341.9054 1.513 1.3524m2.8882.4585c.2407 0 .3094-.1605.3323-.2522.0115-.0343.0115-.0917.0115-.126v-2.533h.871v2.4642c0 .0688 0 .1948-.0114.2292-.0573.6419-.5616.8482-1.192.8482-.6303 0-1.1346-.2063-1.192-.8482 0-.0344-.0114-.1604-.0114-.2292v-2.4642h.871v2.533c0 .0458 0 .0916.0115.126 0 .0917.0688.2522.3095.2522m7.1518-.0344c.2522 0 .3324-.1605.3553-.2522.0115-.0343.0115-.0917.0115-.126v-.4929h-.3553v-.5043H24v.917c0 .0687 0 .1145-.0115.2292-.0573.6303-.596.8481-1.2034.8481-.6075 0-1.1461-.2178-1.2034-.8481-.0115-.1147-.0115-.1605-.0115-.2293v-1.444c0-.0574.0115-.172.0115-.2293.0802-.6419.596-.8482 1.2034-.8482s1.1347.2063 1.2034.8482c.0115.1031.0115.2292.0115.2292v.1146h-.8596v-.1948s0-.0803-.0115-.1261c-.0114-.0802-.0802-.2521-.3438-.2521-.2521 0-.321.1604-.3438.2521-.0115.0458-.0115.1032-.0115.1605v1.5702c0 .0458 0 .0916.0115.126 0 .0917.0917.2522.3323.2522"/></svg></div><div class="blogo img" title="Scarlett"><img src="logos/scarlett.svg" alt="Scarlett" loading="lazy"></div><div class="blogo">Scovo</div><div class="blogo img" title="Sharp"><img src="logos/sharp.svg" alt="Sharp" loading="lazy"></div><div class="blogo img" title="Sony"><img src="logos/sony.svg" alt="Sony" loading="lazy"></div><div class="blogo">SUPRA</div><div class="blogo img" title="Tefal"><img src="logos/tefal.svg" alt="Tefal" loading="lazy"></div><div class="blogo img" title="THOMSON"><img src="logos/thomson.svg" alt="THOMSON" loading="lazy"></div><div class="blogo img" title="TP-LINK"><svg viewBox="-0.08 -0.20 24.17 24.40" width="25.8" height="26" aria-hidden="true"><path fill="#4ACBD6" d="M15.185 0C10.218 0 6.25 3.984 6.25 8.903V10.8h4.99V8.903c0-2.135 1.736-3.863 3.946-3.863 2.187 0 3.708 1.536 3.708 3.815 0 2.257-1.64 3.912-3.827 3.912h-1.878v5.039h1.878c4.874 0 8.819-4.007 8.819-8.952C23.885 3.72 20.2 0 15.185 0zM.115 12.6v4.103c0 .624.523 1.248 1.236 1.248h4.753v4.801c0 .624.523 1.248 1.236 1.248h4.065V12.6Z"/></svg><span style="color:#4ACBD6">tp-link</span></div><div class="blogo">Vitek</div><div class="blogo">Webber</div><div class="blogo img" title="XEROX"><img src="logos/xerox.svg" alt="XEROX" loading="lazy"></div><div class="blogo img" title="XIAOMI"><img src="logos/xiaomi.svg" alt="XIAOMI" loading="lazy"></div><div class="blogo img" title="ZYXEL"><img src="logos/zyxel.svg" alt="ZYXEL" loading="lazy"></div><div class="blogo more"><b>540+</b>брендов ещё</div></div>
+    <div class="brands" id="brands" aria-live="polite"></div>
   </section>
 
   <!-- Покупателям -->
-  <!-- 7. Покупателям -->
-  <section id="buyers">
-    <div class="wrap">
-      <div class="sec-top">
-        <div class="eyebrow">Для тех, кто купил наш товар</div>
-        <h2>Покупателям</h2>
-        <p class="sub">Если с заказом что-то не так, мы поможем. Быстрее всего вопрос решается через маркетплейс, на котором вы покупали.</p>
-      </div>
-
-      <div class="first">
-        <div class="route main">
-          <span class="tag">Быстрее всего</span>
-          <h3>Возврат и обмен через маркетплейс</h3>
-          <ol>
-            <li>Откройте заказ в личном кабинете маркетплейса</li>
-            <li>Выберите «Вернуть товар» и укажите причину</li>
-            <li>Приложите фото, если товар с браком или не тот</li>
-            <li>Сдайте товар в пункт выдачи, деньги вернёт маркетплейс</li>
-          </ol>
-          <div class="links">
-            <a class="chip" href="https://yandex.ru/support/market/return/terms.html" target="_blank" rel="noopener">Возврат на Яндекс Маркете ↗</a>
-            <a class="chip" href="https://www.ozon.ru/my/returns" target="_blank" rel="noopener">Возврат на Ozon ↗</a>
-            <a class="chip" href="https://www.wildberries.ru/lk/myrefunds" target="_blank" rel="noopener">Возврат на Wildberries ↗</a>
-          </div>
-        </div>
-        <div class="route alt">
-          <span class="tag grey">Напрямую к нам</span>
-          <h3>Когда писать в отдел претензий</h3>
-          <ul>
-            <li>Маркетплейс не решил вопрос или отказал в возврате</li>
-            <li>Товар сломался в гарантийный срок</li>
-            <li>Не хватает деталей, инструкции или документов</li>
-            <li>Нужна консультация по использованию товара</li>
-          </ul>
-          <div class="mailline"><a class="btn dark" href="#claim-form">Написать обращение</a><span>или на почту <b class="sel">pretension@omni-market.ru</b></span></div>
+  <section class="wrap sec" id="buyers">
+    <p class="eyebrow mono">Для тех, кто купил наш товар</p>
+    <h2 class="h2">Покупателям</h2>
+    <p class="lead">Если с заказом что‑то не так, мы поможем.<br>Быстрее всего вопрос решается через маркетплейс, на котором вы покупали.</p>
+    <div class="duo sec-body">
+      <div class="box">
+        <span class="tag mono">Быстрее всего</span>
+        <h3>Возврат и обмен через маркетплейс</h3>
+        <ol class="list">
+          <li>Откройте заказ в личном кабинете маркетплейса</li>
+          <li>Выберите «Вернуть товар» и укажите причину</li>
+          <li>Приложите фото, если товар с браком или не тот</li>
+          <li>Сдайте товар в пункт выдачи, деньги вернёт маркетплейс</li>
+        </ol>
+        <div class="links">
+          <a class="ext" href="https://www.wildberries.ru/lk/myrefunds" target="_blank" rel="noopener">Возврат на Wildberries<i class="ar"><img class="t-l" src="img/arrow-sm-dark.svg" alt=""><img class="t-d" src="img/arrow-sm-light.svg" alt=""></i></a>
+          <a class="ext" href="https://www.ozon.ru/my/returns" target="_blank" rel="noopener">Возврат на Ozon<i class="ar"><img class="t-l" src="img/arrow-sm-dark.svg" alt=""><img class="t-d" src="img/arrow-sm-light.svg" alt=""></i></a>
+          <a class="ext" href="https://yandex.ru/support/market/return/terms.html" target="_blank" rel="noopener">Возврат на Яндекс Маркете<i class="ar"><img class="t-l" src="img/arrow-sm-dark.svg" alt=""><img class="t-d" src="img/arrow-sm-light.svg" alt=""></i></a>
         </div>
       </div>
-
-      <h3 class="subh" style="margin-top:64px">Гарантия и возвраты</h3>
-      <div class="warranty">
-        <div class="w"><div class="k">7 дней</div><b>Возврат товара надлежащего качества</b><p>Если товар не подошёл, но сохранён товарный вид, упаковка и документы. Для непродовольственных товаров при покупке онлайн.</p></div>
-        <div class="w"><div class="k">Весь срок</div><b>Возврат или замена при браке</b><p>В пределах гарантийного срока, а если он не установлен, в течение двух лет. Нужны фото или видео дефекта.</p></div>
-        <div class="w"><div class="k">Срок бренда</div><b>Гарантийный ремонт</b><p>В рамках срока, заявленного производителем. Через авторизованные сервисные центры бренда. Список центров пришлём по запросу.</p></div>
-      </div>
-
-      <h3 class="subh">Частые вопросы</h3>
-      <div class="faq">
-        <details><summary>Где найти номер заказа?</summary><p>В личном кабинете маркетплейса в разделе «Заказы». Номер также приходит в письме или SMS о покупке.</p></details>
-        <details><summary>Пришёл не тот товар или не хватает деталей</summary><p>Не выбрасывайте упаковку. Сфотографируйте товар, этикетку со штрихкодом и содержимое коробки, затем оформите возврат на маркетплейсе или напишите нам с номером заказа.</p></details>
-        <details><summary>Как получить чек или закрывающие документы?</summary><p>Электронный чек приходит от маркетплейса на почту или в личный кабинет. Для юрлиц и ИП документы можно запросить в поддержке площадки или у нас в отделе претензий.</p></details>
-        <details><summary>Где скачать инструкцию к товару?</summary><p>Инструкция обычно есть в карточке товара. Если её там нет, напишите нам название и артикул, пришлём файл.</p></details>
-        <details><summary>Сколько рассматривается обращение?</summary><p>Отвечаем в течение 2 рабочих дней. Решение по претензии даём не позднее 10 дней, как предписывает закон о защите прав потребителей.</p></details>
-        <details><summary>Можно ли отправить товар вам напрямую?</summary><p>Не отправляйте товар без согласования. Возвраты принимаются через пункты выдачи маркетплейса, так деньги вернутся быстрее и без лишних расходов.</p></details>
-      </div>
-
-      <div class="form-card buyer-form" id="claim-form">
-        <div class="aside">
-          <h3>Обращение по заказу</h3>
-          <p>Опишите проблему и приложите фото. Ответим в течение 2 рабочих дней на указанную почту или телефон.</p>
-          <div class="contact-mini">
-            <div><small>Почта</small>pretension@omni-market.ru</div>
-            <div><small>Срок ответа</small>до 2 рабочих дней</div>
-          </div>
-        </div>
-        <form id="claim" novalidate><input type="hidden" name="form_type" value="claim"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp"><input type="hidden" name="started" value="">
-          <div class="f"><label for="c-mp">Где покупали</label>
-            <select id="c-mp" name="marketplace"><option>Wildberries</option><option>Ozon</option><option>Яндекс Маркет</option><option>Другое</option></select></div>
-          <div class="f"><label for="c-order">Номер заказа</label><input id="c-order" name="order" placeholder="Например, 12345678"></div>
-          <div class="f full"><label for="c-item">Товар</label><input id="c-item" name="item" placeholder="Название или артикул"></div>
-          <div class="f"><label for="c-type">Тип обращения</label>
-            <select id="c-type" name="type"><option>Брак или поломка</option><option>Не тот товар</option><option>Некомплект</option><option>Гарантийный ремонт</option><option>Документы или чек</option><option>Консультация</option></select></div>
-          <div class="f"><label for="c-files">Фото или видео, до 10 МБ</label><input id="c-files" name="files[]" type="file" accept="image/*,video/*" multiple></div>
-          <div class="f full"><label for="c-text">Что случилось *</label><textarea id="c-text" name="text" placeholder="Опишите проблему"></textarea></div>
-          <div class="f"><label for="c-name">Имя</label><input id="c-name" name="name" autocomplete="name"></div>
-          <div class="f"><label for="c-contact">Телефон или почта *</label><input id="c-contact" name="contact" autocomplete="email"></div>
-          <label class="consent" for="c-consent"><input id="c-consent" type="checkbox" name="consent" value="yes" required> <span>Даю <a href="consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a> в соответствии с <a href="privacy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a></span></label>
-          <div class="form-foot"><button class="btn red" type="submit">Отправить обращение</button><span class="ok" hidden></span></div>
-        </form>
+      <div class="box">
+        <span class="tag mono">Напрямую к нам</span>
+        <h3>Когда писать в отдел претензий</h3>
+        <ul class="list">
+          <li>Маркетплейс не решил вопрос или отказал в возврате</li>
+          <li>Товар сломался в гарантийный срок</li>
+          <li>Не хватает деталей, инструкции или документов</li>
+          <li>Нужна консультация по использованию товара</li>
+        </ul>
+        <button class="btn btn-2 cta" type="button" data-open="claim-modal">Отправить обращение</button>
+        <p class="mail-note">или написать на почту <b>pretension@omni-market.ru</b></p>
       </div>
     </div>
-  </section>
 
-  <!-- Контакты -->
-  <!-- 8. Контакты -->
-  <section id="contacts" style="border-top:1px solid var(--line)">
-    <div class="wrap">
-      <div class="sec-top">
-        <div class="eyebrow">Контакты</div>
-        <h2>Напишите в нужный отдел</h2>
-      </div>
-      <div class="depts">
-        <div class="dept">
-          <span class="tag grey">Покупателям</span>
-          <h3>Отдел претензий</h3>
-          <p>Брак, некомплект, гарантия, документы по заказу. Укажите номер заказа.</p>
-          <div class="row"><div><small>Почта</small><span class="v">pretension@omni-market.ru</span></div><button class="copy" type="button">Копировать</button></div>
-          <div class="row"><div><small>Срок ответа</small><span class="v">до 2 рабочих дней</span></div></div>
-        </div>
-        <div class="dept">
-          <span class="tag">Поставщикам</span>
-          <h3>Отдел закупок</h3>
-          <p>Предложения о поставках, прайс-листы, условия сотрудничества.</p>
-          <div class="row"><div><small>Почта</small><span class="v">hello@omni-market.ru</span></div><button class="copy" type="button">Копировать</button></div>
-          <div class="row"><div><small>Часы работы</small><span class="v">Пн–Пт, 10:00–19:00 МСК</span></div></div>
-        </div>
+    <h3 class="h3" style="margin-top:64px">Гарантия и возвраты</h3>
+    <div class="guar">
+      <div class="g"><p class="mono">Возврат товара надлежащего качества</p><b>7 дней</b><p>Если товар не подошёл, но сохранён товарный вид, упаковка и документы. Для непродовольственных товаров при покупке онлайн.</p></div>
+      <div class="g"><p class="mono">Возврат или замена при браке</p><b>Весь срок</b><p>В пределах гарантийного срока, а если он не установлен, в течение двух лет. Нужны фото или видео дефекта.</p></div>
+      <div class="g"><p class="mono">Гарантийный ремонт</p><b>Срок бренда</b><p>В рамках срока, заявленного производителем. Через авторизованные сервисные центры бренда. Список центров пришлём по запросу.</p></div>
+    </div>
+
+    <div class="split" style="margin-top:64px">
+      <h3 class="h3">Частые вопросы</h3>
+      <div class="faq">
+        <details open><summary>Где найти номер заказа?<i class="ic" aria-hidden="true"><img class="p t-l" src="img/plus-dark.svg" alt=""><img class="p t-d" src="img/plus-light.svg" alt=""><img class="x" src="img/x-red.svg" alt=""></i></summary><p>В личном кабинете маркетплейса в разделе «Заказы».<br>Номер также приходит в письме или СМС о покупке.</p></details>
+        <details><summary>Пришёл не тот товар или не хватает деталей<i class="ic" aria-hidden="true"><img class="p t-l" src="img/plus-dark.svg" alt=""><img class="p t-d" src="img/plus-light.svg" alt=""><img class="x" src="img/x-red.svg" alt=""></i></summary><p>Не выбрасывайте упаковку. Сфотографируйте товар, этикетку со штрихкодом и содержимое коробки, затем оформите возврат на маркетплейсе или напишите нам с номером заказа.</p></details>
+        <details><summary>Как получить чек или закрывающие документы?<i class="ic" aria-hidden="true"><img class="p t-l" src="img/plus-dark.svg" alt=""><img class="p t-d" src="img/plus-light.svg" alt=""><img class="x" src="img/x-red.svg" alt=""></i></summary><p>Электронный чек приходит от маркетплейса на почту или в личный кабинет. Для юрлиц и ИП документы можно запросить в поддержке площадки или у нас в отделе претензий.</p></details>
+        <details><summary>Где скачать инструкцию к товару?<i class="ic" aria-hidden="true"><img class="p t-l" src="img/plus-dark.svg" alt=""><img class="p t-d" src="img/plus-light.svg" alt=""><img class="x" src="img/x-red.svg" alt=""></i></summary><p>Инструкция обычно есть в карточке товара. Если её там нет, напишите нам название и артикул, пришлём файл.</p></details>
+        <details><summary>Сколько рассматривается обращение?<i class="ic" aria-hidden="true"><img class="p t-l" src="img/plus-dark.svg" alt=""><img class="p t-d" src="img/plus-light.svg" alt=""><img class="x" src="img/x-red.svg" alt=""></i></summary><p>Отвечаем в течение 2 рабочих дней. Решение по претензии даём не позднее 10 дней, как предписывает закон о защите прав потребителей.</p></details>
+        <details><summary>Можно ли отправить товар вам напрямую?<i class="ic" aria-hidden="true"><img class="p t-l" src="img/plus-dark.svg" alt=""><img class="p t-d" src="img/plus-light.svg" alt=""><img class="x" src="img/x-red.svg" alt=""></i></summary><p>Не отправляйте товар без согласования. Возвраты принимаются через пункты выдачи маркетплейса, так деньги вернутся быстрее и без лишних расходов.</p></details>
       </div>
     </div>
   </section>
 
   <!-- Поставщикам -->
-  <!-- 6. Поставщикам -->
-  <section class="band" id="suppliers">
+  <section class="navy sec" id="suppliers">
     <div class="wrap">
-      <div class="band-head">
-        <div>
-          <div class="eyebrow">Для производителей и дистрибьюторов</div>
-          <div class="aud">Поставщикам</div>
-        </div>
-        <p class="sub" style="max-width:46ch">Выведем ваш бренд на маркетплейсы или увеличим продажи там, где он уже есть. Вы поставляете товар, остальное делаем мы.</p>
+      <p class="eyebrow mono">Для производителей и дистрибьюторов</p>
+      <h2 class="h2">Поставщикам</h2>
+      <p class="lead">Выведем ваш бренд на маркетплейсы или увеличим продажи там, где он уже есть. Вы поставляете товар, остальное делаем мы.</p>
+
+      <div class="perks">
+        <div class="perk"><b>Сразу несколько площадок</b><p>Один договор с нами вместо отдельной работы с каждым маркетплейсом.</p></div>
+        <div class="perk"><b>Карточки и контент</b><p>Фото, описания, характеристики и инфографика по требованиям площадок.</p></div>
+        <div class="perk"><b>Продвижение</b><p>Реклама внутри маркетплейсов, участие в акциях, работа с ценой.</p></div>
+        <div class="perk"><b>Склад и логистика</b><p>Приёмка, хранение, поставки на склады маркетплейсов и отгрузка FBS.</p></div>
+        <div class="perk"><b>Отзывы и сервис</b><p>Отвечаем покупателям, разбираем претензии, держим рейтинг бренда.</p></div>
+        <div class="perk"><b>Отчётность</b><p>Регулярные отчёты о продажах, остатках и прогноз следующих закупок.</p></div>
       </div>
 
-      <div class="offer">
-        <div><b>Сразу несколько площадок</b><p>Один договор с нами вместо отдельной работы с каждым маркетплейсом.</p></div>
-        <div><b>Карточки и контент</b><p>Фото, описания, характеристики и инфографика по требованиям площадок.</p></div>
-        <div><b>Продвижение</b><p>Реклама внутри маркетплейсов, участие в акциях, работа с ценой.</p></div>
-        <div><b>Склад и логистика</b><p>Приёмка, хранение, поставки на склады маркетплейсов и отгрузка FBS.</p></div>
-        <div><b>Отзывы и сервис</b><p>Отвечаем покупателям, разбираем претензии, держим рейтинг бренда.</p></div>
-        <div><b>Отчётность</b><p>Регулярные отчёты о продажах, остатках и прогноз следующих закупок.</p></div>
-      </div>
-
-      <h3 class="subh">Модели сотрудничества</h3>
+      <h3 class="h3" style="margin-top:64px">Модели сотрудничества</h3>
       <div class="models">
-        <div class="model"><span class="tag">Закупка</span><b>Выкупаем товар</b><p>Покупаем партию по вашему прайсу. Оплата по договору поставки.</p></div>
-        <div class="model"><span class="tag">Реализация</span><b>Продаём с оплатой по факту</b><p>Вы передаёте товар, мы платим за проданное по итогам отчётного периода.</p></div>
-        <div class="model"><span class="tag">Агент</span><b>Работаем от вашего имени</b><p>Ведём ваш магазин на маркетплейсах за агентское вознаграждение.</p></div>
+        <div class="model"><span class="tag mono">Закупка</span><h4>Выкупаем товар</h4><p>Покупаем партию по вашему прайсу. Оплата по договору поставки.</p></div>
+        <div class="model"><span class="tag mono">Реализация</span><h4>Продаём<br>с оплатой по факту</h4><p>Вы передаёте товар, мы платим за проданное по итогам отчётного периода.</p></div>
+        <div class="model"><span class="tag mono">Агент</span><h4>Работаем от вашего имени</h4><p>Ведём ваш магазин на маркетплейсах за агентское вознаграждение.</p></div>
       </div>
 
-      <h3 class="subh">Что нужно от поставщика</h3>
-      <ul class="reqs">
-        <li>Вы производитель, импортёр или официальный дистрибьютор бренда</li>
-        <li>Декларации или сертификаты соответствия ЕАЭС</li>
-        <li>Маркировка «Честный знак» для обязательных категорий</li>
-        <li>Штрихкоды EAN-13 на каждой единице товара</li>
-        <li>Стабильные остатки и прайс с оптовыми ценами</li>
-        <li>Документы на товарный знак или разрешение правообладателя</li>
-      </ul>
+      <div class="split" style="margin-top:84px">
+        <h3 class="h3">Что нужно<br>от поставщика</h3>
+        <ul class="reqs">
+          <li><img src="img/marker.svg" alt="">Быть производителем, импортёром или официальным дистрибьютором бренда</li>
+          <li><img src="img/marker.svg" alt="">Маркировка «Честный знак» для обязательных категорий</li>
+          <li><img src="img/marker.svg" alt="">Стабильные остатки и прайс с оптовыми ценами</li>
+          <li><img src="img/marker.svg" alt="">Декларации или сертификаты соответствия ЕАЭС</li>
+          <li><img src="img/marker.svg" alt="">Штрихкоды EAN-13 на каждой единице товара</li>
+          <li><img src="img/marker.svg" alt="">Документы на товарный знак или разрешение правообладателя</li>
+        </ul>
+      </div>
 
-      <h3 class="subh">Как начать работу</h3>
+      <h3 class="h3" style="margin-top:64px">Как начать работу</h3>
       <ol class="steps">
-        <li><b>Заявка</b><span>Форма ниже или письмо в отдел закупок</span></li>
-        <li><b>Прайс и каталог</b><span>Присылаете ассортимент и цены</span></li>
-        <li><b>Оценка спроса</b><span>Считаем потенциал продаж, до 3 рабочих дней</span></li>
-        <li><b>Договор</b><span>Согласуем модель и условия</span></li>
-        <li><b>Первая поставка</b><span>Принимаем товар и запускаем продажи</span></li>
+        <li><p class="mono">Шаг 1</p><b>Заявка</b><p>Заполните форму ниже или отправьте письмо в отдел закупок</p></li>
+        <li><p class="mono">Шаг 2</p><b>Прайс и каталог</b><p>Пришлите ассортимент и цены</p></li>
+        <li><p class="mono">Шаг 3</p><b>Оценка спроса</b><p>Посчитаем потенциал продаж, до 3 рабочих дней</p></li>
+        <li><p class="mono">Шаг 4</p><b>Договор</b><p>Согласуем модель и условия</p></li>
+        <li><p class="mono">Шаг 5</p><b>Первая поставка</b><p>Принимаем товар и запускаем продажи</p></li>
       </ol>
 
-      <div class="form-card">
-        <div class="aside">
+      <div class="formcard dark dark-form" id="supplier-card">
+        <div class="info">
           <h3>Заявка на сотрудничество</h3>
-          <p>Ответим в течение 3 рабочих дней. Если удобнее, напишите напрямую в отдел закупок.</p>
-          <div class="contact-mini">
-            <div><small>Почта</small>hello@omni-market.ru</div>
-            <div><small>Часы работы</small>Пн–Пт, 10:00–19:00 МСК</div>
-          </div>
+          <p class="muted">Ответим в течение 3 рабочих дней. Если удобнее, напишите напрямую в отдел закупок.</p>
+          <dl>
+            <div><dt class="mono">Почта</dt><dd>hello@omni-market.ru</dd></div>
+            <div><dt class="mono">Часы работы</dt><dd>Будни с 10 до 19 Мск</dd></div>
+          </dl>
         </div>
-        <form id="supplier-form" novalidate><input type="hidden" name="form_type" value="supplier"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp"><input type="hidden" name="started" value="">
-          <div class="f"><label for="s-company">Компания *</label><input id="s-company" name="company" autocomplete="organization" placeholder="ООО «Пример»"></div>
-          <div class="f"><label for="s-inn">ИНН</label><input id="s-inn" name="inn" inputmode="numeric" placeholder="10 или 12 цифр"></div>
-          <div class="f"><label for="s-name">Контактное лицо *</label><input id="s-name" name="name" autocomplete="name" placeholder="Имя и должность"></div>
-          <div class="f"><label for="s-phone">Телефон</label><input id="s-phone" name="phone" type="tel" autocomplete="tel" placeholder="+7"></div>
-          <div class="f"><label for="s-email">Почта</label><input id="s-email" name="email" type="email" autocomplete="email" placeholder="name@company.ru"></div>
+        <form id="supplier-form" novalidate data-type="supplier">
+          <input type="hidden" name="form_type" value="supplier">
+          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp"><input type="hidden" name="started" value="">
+          <div class="f"><label for="s-company">Компания*</label><input class="inp" id="s-company" name="company" autocomplete="organization" placeholder="ООО «Пример»" data-req="Укажите компанию"></div>
+          <div class="f"><label for="s-inn">ИНН</label><input class="inp" id="s-inn" name="inn" inputmode="numeric" placeholder="10 или 12 цифр" data-check="inn"></div>
+          <div class="f"><label for="s-name">Контактное лицо*</label><input class="inp" id="s-name" name="name" autocomplete="name" placeholder="Имя и должность" data-req="Укажите контактное лицо"></div>
           <div class="f"><label for="s-cat">Категория товара</label>
-            <select id="s-cat" name="category">
+            <select class="inp" id="s-cat" name="category">
               <option>Бытовая техника</option><option>Электроника</option><option>Товары для дома</option>
-              <option>Красота и здоровье</option><option>Дача и сад</option><option>Детские товары</option>
-              <option>Спорт и отдых</option><option>Автотовары</option><option>Другое</option>
+              <option>Красота и здоровье</option><option>Дача и сад</option><option>Спорт и отдых</option>
+              <option>Автотовары</option><option>Другое</option>
             </select></div>
-          <div class="f full"><label for="s-brands">Бренды и ссылка на прайс</label><textarea id="s-brands" name="brands" placeholder="Какие бренды предлагаете, ссылка на каталог или прайс"></textarea></div>
-          <label class="consent" for="s-consent"><input id="s-consent" type="checkbox" name="consent" value="yes" required> <span>Даю <a href="consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a> в соответствии с <a href="privacy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a></span></label>
-          <div class="form-foot"><button class="btn red" type="submit">Отправить заявку</button><span class="ok" hidden></span></div>
+          <div class="f"><label for="s-phone">Телефон*</label><input class="inp" id="s-phone" name="phone" type="tel" autocomplete="tel" value="+7" data-req="Укажите телефон" data-check="phone"></div>
+          <div class="f"><label for="s-email">Почта*</label><input class="inp" id="s-email" name="email" type="email" autocomplete="email" placeholder="name@company.ru" data-req="Укажите почту" data-check="email"></div>
+          <div class="f full"><label for="s-brands">Бренды и ссылка на прайс</label><textarea class="inp" id="s-brands" name="brands" placeholder="Какие бренды предлагаете, ссылка на каталог или прайс"></textarea></div>
+          <label class="consent" for="s-consent"><input class="box-check" id="s-consent" type="checkbox" name="consent" value="yes"><span class="txt">Даю <a href="consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a> в соответствии с <a href="privacy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a></span></label>
+          <div class="form-foot"><button class="btn btn-1" type="submit">Отправить</button></div>
+          <p class="ok" hidden></p>
         </form>
       </div>
     </div>
   </section>
 
   <!-- О компании -->
-  <!-- 5. О компании -->
-  <section id="about">
-    <div class="wrap about">
+  <section class="wrap sec" id="about">
+    <div class="about">
       <div>
-        <div class="eyebrow">О компании</div>
-        <h2>Продавец на маркетплейсах с 2020 года</h2>
+        <p class="eyebrow mono">О компании</p>
+        <h2 class="h2">Продавец<br>на маркетплейсах с 2020 года</h2>
       </div>
-      <div>
-        <div class="text">
-          <p>Закупаем товар, готовим карточки и фото, храним и отгружаем заказы, отвечаем на вопросы и отзывы покупателей.</p>
-          <p>Работаем по схемам FBO и FBS: часть товара лежит на складах маркетплейсов, часть отгружаем со своих складов. Доставляем по всей России.</p>
+      <div class="about-text">
+        <p>Закупаем товар, готовим карточки и фото, храним и отгружаем заказы, отвечаем на вопросы и отзывы покупателей.</p>
+        <p>Работаем по схемам FBO и FBS: часть товара лежит на складах маркетплейсов, часть отгружаем со своих складов. Доставляем по всей России.</p>
+        <div class="facts">
+          <div class="fact"><span class="mono">На рынке</span><b>с 2020 года</b></div>
+          <div class="fact"><span class="mono">Брендов</span><b>600+</b></div>
+          <div class="fact"><span class="mono">Товаров</span><b>100 000+</b></div>
+          <div class="fact"><span class="mono">Доставка</span><b>по всей России</b></div>
         </div>
-        <div class="facts" style="margin-top:24px">
-          <div class="fact"><small>На рынке</small><b>с 2020 года</b></div>
-          <div class="fact"><small>Брендов</small><b>600+</b></div>
-          <div class="fact"><small>Товаров</small><b>100 000+</b></div>
-          <div class="fact"><small>Доставка</small><b>по всей России</b></div>
-        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Контакты -->
+  <section class="wrap sec contacts" id="contacts">
+    <p class="eyebrow mono">Контакты</p>
+    <h2 class="h2">Напишите в нужный отдел</h2>
+    <div class="duo" style="margin-top:24px;align-items:start">
+      <div class="ccard buyer">
+        <p class="mono">Покупателям</p>
+        <h3>Отдел претензий</h3>
+        <p>Брак, некомплект, гарантия, документы по заказу. Укажите номер заказа.</p>
+        <dl>
+          <div><dt class="mono">Почта</dt><dd>pretension@omni-market.ru</dd></div>
+          <div><dt class="mono">Срок ответа</dt><dd>до 2 рабочих дней</dd></div>
+        </dl>
+      </div>
+      <div class="ccard supplier">
+        <p class="mono">Поставщикам</p>
+        <h3>Отдел закупок</h3>
+        <p>Предложения о поставках, прайс-листы, условия сотрудничества.</p>
+        <dl>
+          <div><dt class="mono">Почта</dt><dd>hello@omni-market.ru</dd></div>
+          <div><dt class="mono">Часы работы</dt><dd>Будни с 10 до 19 Мск</dd></div>
+        </dl>
       </div>
     </div>
   </section>
 </main>
 
-<footer>
+<footer class="foot">
   <div class="wrap">
-    <div class="foot">
+    <div class="foot-grid">
       <div>
-        <img class="foot-logo" src="data:image/png;base64,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" alt="omni.market" width="118" height="64">
-        ООО «ПАРСЕК-Н» · ИНН 5258133205 · ОГРН 1165275052360<br>
-        603105, Россия, Нижегородская область,<br>г. Нижний Новгород, ул. Ошарская, д. 77А, помещ. П28
+        <a class="logo" href="#top" aria-label="Omni Market — наверх"><img class="lw" src="img/logo-light-word.svg" alt=""><img class="lo" src="img/logo-light-o.svg" alt=""><img class="lm" src="img/logo-light-m.svg" alt=""></a>
+        <address>ООО «ПАРСЕК-Н» · ИНН 5258133205 · ОГРН 1165275052360<br>603105, Россия, Нижегородская область,<br>г. Нижний Новгород, ул. Ошарская, д. 77А, помещение П28</address>
       </div>
       <div>
-        <b>Разделы</b>
-        <a href="#buyers">Покупателям</a>
-        <a href="#contacts">Контакты</a>
-        <a href="#suppliers">Поставщикам</a>
-        <a href="#about">О компании</a>
+        <h4>Разделы</h4>
+        <nav class="foot-links" aria-label="Разделы">
+          <a href="#buyers">Покупателям</a>
+          <a href="#suppliers">Поставщикам</a>
+          <a href="#about">О компании</a>
+          <a href="#contacts">Контакты</a>
+        </nav>
       </div>
       <div>
-        <b>Магазины</b>
-        <a href="https://www.wildberries.ru/seller/82591" target="_blank" rel="noopener">Wildberries ↗</a>
-        <a href="https://www.ozon.ru/seller/tekki-market/" target="_blank" rel="noopener">Ozon ↗</a>
-        <a href="https://market.yandex.ru/business--omni-market/187425633" target="_blank" rel="noopener">Яндекс Маркет ↗</a>
+        <h4>Магазины</h4>
+        <div class="foot-links ext-links">
+          <a href="https://www.wildberries.ru/seller/82591" target="_blank" rel="noopener">Wildberries<i class="ar"><img src="img/arrow-sm-footer.svg" alt=""></i></a>
+          <a href="https://www.ozon.ru/seller/tekki-market/" target="_blank" rel="noopener">Ozon<i class="ar"><img src="img/arrow-sm-footer.svg" alt=""></i></a>
+          <a href="https://market.yandex.ru/business--omni-market/187425633" target="_blank" rel="noopener">Яндекс Маркет<i class="ar"><img src="img/arrow-sm-footer.svg" alt=""></i></a>
+        </div>
       </div>
     </div>
-    <div class="legal">© 2026 Omni Market · <a href="privacy.html" target="_blank" rel="noopener" style="display:inline">Политика обработки персональных данных</a> · <a href="consent.html" target="_blank" rel="noopener" style="display:inline">Согласие на обработку персональных данных</a></div>
+    <p class="legal">© 2026 Omni Market · <a href="privacy.html" target="_blank" rel="noopener">Политика обработки персональных данных</a> · <a href="consent.html" target="_blank" rel="noopener">Согласие на обработку персональных данных</a></p>
   </div>
 </footer>
 
+<!-- Поп-ап: обращение по заказу -->
+<div class="modal" id="claim-modal" aria-hidden="true">
+  <div class="pop" role="dialog" aria-modal="true" aria-labelledby="claim-title">
+    <div class="pop-head"><button class="x-btn" type="button" data-close aria-label="Закрыть"><img class="t-l" src="img/x-dark.svg" alt=""><img class="t-d" src="img/x-light.svg" alt=""></button></div>
+    <div class="formcard">
+      <div class="info">
+        <h3 id="claim-title">Обращение по заказу</h3>
+        <p style="color:var(--text)">Опишите проблему и приложите фото. Ответим в течение 2 рабочих дней на указанную почту или телефон.</p>
+        <dl>
+          <div><dt class="mono">Почта</dt><dd>pretension@omni-market.ru</dd></div>
+          <div><dt class="mono">Срок ответа</dt><dd>до 2 рабочих дней</dd></div>
+        </dl>
+      </div>
+      <form id="claim-form" novalidate data-type="claim">
+        <input type="hidden" name="form_type" value="claim">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp"><input type="hidden" name="started" value="">
+        <div class="f"><label for="c-mp">Где покупали*</label>
+          <select class="inp" id="c-mp" name="marketplace"><option>Wildberries</option><option>Ozon</option><option>Яндекс Маркет</option><option>Другое</option></select></div>
+        <div class="f"><label for="c-order">Номер заказа*</label><input class="inp" id="c-order" name="order" placeholder="Например, 12345678" data-req="Укажите номер заказа"></div>
+        <div class="f full"><label for="c-item">Товар</label><input class="inp" id="c-item" name="item" placeholder="Название или артикул"></div>
+        <div class="f"><label for="c-type">Тип обращения*</label>
+          <select class="inp" id="c-type" name="type"><option>Брак или поломка</option><option>Не тот товар</option><option>Некомплект</option><option>Гарантийный ремонт</option><option>Документы или чек</option><option>Консультация</option></select></div>
+        <div class="f"><label for="c-files">Фото или видео</label><input class="inp" id="c-files" type="file" accept="image/*,video/*" multiple></div>
+        <div class="f full"><label for="c-text">Что случилось</label><textarea class="inp" id="c-text" name="text" placeholder="Опишите проблему"></textarea></div>
+        <div class="f full"><label for="c-name">Имя*</label><input class="inp" id="c-name" name="name" autocomplete="name" data-req="Укажите имя"></div>
+        <div class="f"><label for="c-phone">Телефон*</label><input class="inp" id="c-phone" name="phone" type="tel" autocomplete="tel" value="+7" data-req="Укажите телефон" data-check="phone"></div>
+        <div class="f"><label for="c-email">Почта*</label><input class="inp" id="c-email" name="email" type="email" autocomplete="email" placeholder="name@company.ru" data-req="Укажите почту" data-check="email"></div>
+        <label class="consent" for="c-consent"><input class="box-check" id="c-consent" type="checkbox" name="consent" value="yes"><span class="txt">Даю <a href="consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a> в соответствии с <a href="privacy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a></span></label>
+        <div class="form-foot"><button class="btn btn-1" type="submit">Отправить</button></div>
+        <p class="ok" hidden></p>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
 (function(){
-  document.querySelectorAll('.copy').forEach(function(b){
-    b.addEventListener('click',function(){
-      var v=b.parentNode.querySelector('.v');
-      var text=v.textContent.trim();
-      function label(t){ b.textContent=t; clearTimeout(b._t); b._t=setTimeout(function(){ b.textContent='Копировать'; },1800); }
-      function legacy(){
-        var ta=document.createElement('textarea'); ta.value=text; ta.setAttribute('readonly','');
-        ta.style.position='fixed'; ta.style.top='0'; ta.style.left='0'; ta.style.opacity='0';
-        document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0,text.length);
-        var ok=false; try{ ok=document.execCommand('copy'); }catch(e){}
-        document.body.removeChild(ta);
-        if(ok){ label('Скопировано'); }
-        else { var r=document.createRange(); r.selectNodeContents(v); var s=getSelection(); s.removeAllRanges(); s.addRange(r); label('Нажмите Cmd+C'); }
-      }
-      if(navigator.clipboard && window.isSecureContext){ navigator.clipboard.writeText(text).then(function(){ label('Скопировано'); },legacy); }
-      else { legacy(); }
+  /* ---------- Бренды по категориям ---------- */
+  var BRANDS={
+    1:[["Bosch",116,24],["Haier",78,24],["Gorenje",116,33],["Redmond",129,15],["Tefal",110,23]],
+    2:[["ASUS",116,24],["Canon",116,24],["D-Link",116,24],["Samsung",124,20],["Huawei",135,35]],
+    3:[["Аквафор",158,20],["Vitek",111,26],["Nika",68,20],["Gauss",79,30],["Scovo",108,17]],
+    4:[["Matrix",130,22],["Rowenta",144,13],["Scarlett",97,14],["Polaris",96,15],["Deerma",96,26]],
+    5:[["Makita",136,22],["Olsa",108,42],["Denzel",96,29],["Сибртех",127,33],["Stvol",76,27]],
+    6:[["Bestway",92,26],["Ecos",67,78],["Energy",96,18],["Rexant",100,15],["Leonord",116,58]],
+    7:[["Kärcher",81,22],["Pioneer",97,14],["Kenwood",97,14],["Daewoo",101,15],["Prology",112,24]]
+  };
+  var box=document.getElementById('brands');
+  function renderBrands(c){
+    box.innerHTML=BRANDS[c].map(function(b,i){
+      var h=Math.min(b[2],64), w=Math.round(b[1]*h/b[2]);
+      return '<div class="brand"><img src="img/brands/c'+c+'-'+(i+1)+'.png" alt="'+b[0]+'" width="'+w+'" height="'+h+'"></div>';
+    }).join('');
+  }
+  renderBrands(1);
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.cat').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      if(btn.getAttribute('aria-pressed')==='true') return;
+      document.querySelectorAll('.cat').forEach(function(b){ b.setAttribute('aria-pressed', b===btn?'true':'false'); });
+      var c=btn.getAttribute('data-cat');
+      if(reduce){ renderBrands(c); return; }
+      box.classList.add('fading');
+      setTimeout(function(){ renderBrands(c); requestAnimationFrame(function(){ box.classList.remove('fading'); }); },200);
     });
   });
-  document.querySelectorAll('form').forEach(function(f){
+
+  /* ---------- Поп-ап ---------- */
+  var modal=document.getElementById('claim-modal'), lastFocus=null;
+  function openModal(){ lastFocus=document.activeElement; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.classList.add('locked'); setTimeout(function(){ var f=modal.querySelector('select,input:not([type=hidden]):not(.hp)'); if(f) f.focus(); },50); }
+  function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.classList.remove('locked'); if(lastFocus) lastFocus.focus(); }
+  document.querySelectorAll('[data-open="claim-modal"]').forEach(function(b){ b.addEventListener('click',openModal); });
+  modal.querySelectorAll('[data-close]').forEach(function(b){ b.addEventListener('click',closeModal); });
+  modal.addEventListener('mousedown',function(e){ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&modal.classList.contains('open')) closeModal(); });
+
+  /* ---------- Проверка полей ---------- */
+  function digits(v){ return (v||'').replace(/\D/g,''); }
+  function setErr(el,msg){
+    var wrap=el.closest('.f')||el.closest('.consent');
+    var old=wrap&&wrap.parentNode.querySelector('.err[data-for="'+el.id+'"]');
+    if(old) old.remove();
+    if(msg){
+      el.setAttribute('aria-invalid','true');
+      var p=document.createElement('p'); p.className='err'; p.setAttribute('data-for',el.id); p.id=el.id+'-err'; p.textContent=msg;
+      if(el.type==='checkbox'){ wrap.insertAdjacentElement('afterend',p); p.style.gridColumn='1/-1'; } else wrap.appendChild(p);
+      el.setAttribute('aria-describedby',p.id);
+    } else { el.removeAttribute('aria-invalid'); el.removeAttribute('aria-describedby'); }
+  }
+  function check(el){
+    var v=(el.value||'').trim(), req=el.getAttribute('data-req'), kind=el.getAttribute('data-check');
+    if(el.type==='checkbox'){ setErr(el, el.checked?'':'Отметьте согласие на обработку персональных данных'); return el.checked; }
+    var empty = kind==='phone' ? digits(v).length<=1 : v==='';
+    if(req && empty){ setErr(el,req); return false; }
+    if(!empty){
+      if(kind==='inn' && !/^(\d{10}|\d{12})$/.test(v)){ setErr(el,'Проверьте ИНН'); return false; }
+      if(kind==='phone' && digits(v).length!==11){ setErr(el,'Проверьте телефон'); return false; }
+      if(kind==='email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){ setErr(el,'Проверьте почту'); return false; }
+    }
+    setErr(el,''); return true;
+  }
+  /* телефон: +7 всегда стоит в начале */
+  document.querySelectorAll('input[data-check="phone"]').forEach(function(el){
+    el.addEventListener('input',function(){
+      var d=digits(el.value); if(d.charAt(0)==='7'||d.charAt(0)==='8') d=d.slice(1); d=d.slice(0,10);
+      var out='+7'; if(d.length) out+=' '+d.slice(0,3); if(d.length>3) out+=' '+d.slice(3,6); if(d.length>6) out+='-'+d.slice(6,8); if(d.length>8) out+='-'+d.slice(8,10);
+      el.value=out;
+    });
+    el.addEventListener('focus',function(){ if(!el.value) el.value='+7'; });
+  });
+  document.querySelectorAll('form[data-type]').forEach(function(f){
     var st=f.querySelector('input[name="started"]'); if(st) st.value=String(Date.now());
+    f.querySelectorAll('[data-req],[data-check],.box-check').forEach(function(el){
+      el.addEventListener('blur',function(){ if(el.getAttribute('aria-invalid')==='true') check(el); });
+      el.addEventListener('change',function(){ if(el.getAttribute('aria-invalid')==='true'||el.type==='checkbox') check(el); });
+    });
     f.addEventListener('submit',function(e){
       e.preventDefault();
-      var ok=f.querySelector('.ok'), c=f.querySelector('.consent input'), btn=f.querySelector('button[type="submit"]');
-      function show(msg,isErr){ ok.hidden=false; ok.textContent=msg; ok.classList.toggle('err',!!isErr); }
-      if(c && !c.checked){ show('Отметьте согласие на обработку персональных данных.',true); return; }
+      var ok=f.querySelector('.ok'), btn=f.querySelector('button[type="submit"]');
+      ok.hidden=true; ok.classList.remove('is-err');
+      var fields=f.querySelectorAll('[data-req],[data-check],.box-check'), first=null;
+      fields.forEach(function(el){ if(!check(el) && !first) first=el; });
       var fl=f.querySelector('input[type="file"]');
       if(fl && fl.files){ var t=0; for(var i=0;i<fl.files.length;i++) t+=fl.files[i].size;
-        if(fl.files.length>5){ show('Можно приложить не больше 5 файлов.',true); return; }
-        if(t>10*1024*1024){ show('Файлы слишком большие. Можно приложить до 10 МБ.',true); return; } }
-      var label=btn.textContent; btn.disabled=true; btn.textContent='Отправляем…'; ok.hidden=true;
+        if(fl.files.length>5){ setErr(fl,'Можно приложить не больше 5 файлов'); first=first||fl; }
+        else if(t>10*1024*1024){ setErr(fl,'Файлы слишком большие, можно до 10 МБ'); first=first||fl; }
+        else setErr(fl,''); }
+      if(first){ first.focus(); return; }
       var payload={};
       Array.prototype.forEach.call(f.elements,function(el){
         if(!el.name || el.type==='file' || el.type==='submit') return;
         if(el.type==='checkbox'){ if(el.checked) payload[el.name]=el.value; return; }
         payload[el.name]=el.value;
       });
+      var label=btn.textContent; btn.disabled=true; btn.textContent='Отправляем…';
       var files=fl&&fl.files?Array.prototype.slice.call(fl.files):[];
+      function done(d){
+        ok.hidden=false; ok.textContent=d.message||''; ok.classList.toggle('is-err',!d.ok);
+        if(d.ok){ f.reset(); f.querySelectorAll('input[data-check="phone"]').forEach(function(p){ p.value='+7'; }); if(st) st.value=String(Date.now()); }
+        btn.disabled=false; btn.textContent=label;
+      }
+      /* превью вне сайта: формы не отправляются, показываем успешное состояние */
+      if(!/(^|\.)omni-market\.ru$/.test(location.hostname)){
+        setTimeout(function(){ done({ok:true,message:'Спасибо! Заявка отправлена, мы ответим в ближайшее время.'}); },400); return;
+      }
       Promise.all(files.map(function(file){ return new Promise(function(res,rej){
         var rd=new FileReader(); rd.onload=function(){ res({name:file.name,data:String(rd.result).split(',')[1]||''}); }; rd.onerror=rej; rd.readAsDataURL(file); }); }))
         .then(function(list){ if(list.length) payload.files=list;
           return fetch('send.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}); })
         .then(function(r){ return r.json().catch(function(){ return {ok:false,message:'Не удалось отправить. Попробуйте позже или напишите нам на почту.'}; }); })
-        .then(function(d){
-          show(d.message||'', !d.ok);
-          if(d.ok){ f.reset(); if(st) st.value=String(Date.now()); }
-        })
-        .catch(function(){ show('Нет связи с сервером. Проверьте интернет и попробуйте ещё раз.',true); })
-        .finally(function(){ btn.disabled=false; btn.textContent=label; });
+        .then(function(d){ if(d.ok) d.message='Спасибо! Заявка отправлена, мы ответим в ближайшее время.'; done(d); })
+        .catch(function(){ done({ok:false,message:'Нет связи с сервером. Проверьте интернет и попробуйте ещё раз.'}); });
     });
   });
 })();
 </script>
-
 </body>
 </html>
