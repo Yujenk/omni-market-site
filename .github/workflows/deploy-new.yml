@@ -1,0 +1,33 @@
+name: Deploy preview to omni-market.ru/new
+
+on:
+  push:
+    branches: [redesign]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-new
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Копия в /new не должна попадать в поиск: добавляем noindex только в эту выкладку.
+      - name: Mark preview as noindex
+        run: sed -i 's#<meta charset="utf-8">#<meta charset="utf-8">\n<meta name="robots" content="noindex, nofollow">#' index.html
+
+      - name: Upload preview via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: www/omni-market.ru/new/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            README.md
