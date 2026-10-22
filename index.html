@@ -182,6 +182,8 @@
   .consent{grid-column:1/-1;display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted)}
   .consent input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--red)}
   .form-foot{grid-column:1/-1;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+  .ok.err{color:var(--red)}
   .ok{font-size:14px;color:var(--ink-2);background:var(--bg-2);border-radius:10px;padding:10px 14px}
 
   /* buyers */
@@ -424,18 +426,18 @@
             <div><small>Срок ответа</small>до 2 рабочих дней</div>
           </div>
         </div>
-        <form id="claim" novalidate>
+        <form id="claim" novalidate><input type="hidden" name="form_type" value="claim"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp"><input type="hidden" name="started" value="">
           <div class="f"><label for="c-mp">Где покупали</label>
             <select id="c-mp" name="marketplace"><option>Wildberries</option><option>Ozon</option><option>Яндекс Маркет</option><option>Другое</option></select></div>
           <div class="f"><label for="c-order">Номер заказа</label><input id="c-order" name="order" placeholder="Например, 12345678"></div>
           <div class="f full"><label for="c-item">Товар</label><input id="c-item" name="item" placeholder="Название или артикул"></div>
           <div class="f"><label for="c-type">Тип обращения</label>
             <select id="c-type" name="type"><option>Брак или поломка</option><option>Не тот товар</option><option>Некомплект</option><option>Гарантийный ремонт</option><option>Документы или чек</option><option>Консультация</option></select></div>
-          <div class="f"><label for="c-files">Фото или видео</label><input id="c-files" name="files" type="file" accept="image/*,video/*" multiple></div>
-          <div class="f full"><label for="c-text">Что случилось</label><textarea id="c-text" name="text" placeholder="Опишите проблему"></textarea></div>
+          <div class="f"><label for="c-files">Фото или видео, до 10 МБ</label><input id="c-files" name="files[]" type="file" accept="image/*,video/*" multiple></div>
+          <div class="f full"><label for="c-text">Что случилось *</label><textarea id="c-text" name="text" placeholder="Опишите проблему"></textarea></div>
           <div class="f"><label for="c-name">Имя</label><input id="c-name" name="name" autocomplete="name"></div>
-          <div class="f"><label for="c-contact">Телефон или почта</label><input id="c-contact" name="contact" autocomplete="email"></div>
-          <label class="consent" for="c-consent"><input id="c-consent" type="checkbox" required> <span>Даю <a href="consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a> в соответствии с <a href="privacy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a></span></label>
+          <div class="f"><label for="c-contact">Телефон или почта *</label><input id="c-contact" name="contact" autocomplete="email"></div>
+          <label class="consent" for="c-consent"><input id="c-consent" type="checkbox" name="consent" value="yes" required> <span>Даю <a href="consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a> в соответствии с <a href="privacy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a></span></label>
           <div class="form-foot"><button class="btn red" type="submit">Отправить обращение</button><span class="ok" hidden></span></div>
         </form>
       </div>
@@ -525,10 +527,10 @@
             <div><small>Часы работы</small>Пн–Пт, 10:00–19:00 МСК</div>
           </div>
         </div>
-        <form id="supplier-form" novalidate>
-          <div class="f"><label for="s-company">Компания</label><input id="s-company" name="company" autocomplete="organization" placeholder="ООО «Пример»"></div>
+        <form id="supplier-form" novalidate><input type="hidden" name="form_type" value="supplier"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp"><input type="hidden" name="started" value="">
+          <div class="f"><label for="s-company">Компания *</label><input id="s-company" name="company" autocomplete="organization" placeholder="ООО «Пример»"></div>
           <div class="f"><label for="s-inn">ИНН</label><input id="s-inn" name="inn" inputmode="numeric" placeholder="10 или 12 цифр"></div>
-          <div class="f"><label for="s-name">Контактное лицо</label><input id="s-name" name="name" autocomplete="name" placeholder="Имя и должность"></div>
+          <div class="f"><label for="s-name">Контактное лицо *</label><input id="s-name" name="name" autocomplete="name" placeholder="Имя и должность"></div>
           <div class="f"><label for="s-phone">Телефон</label><input id="s-phone" name="phone" type="tel" autocomplete="tel" placeholder="+7"></div>
           <div class="f"><label for="s-email">Почта</label><input id="s-email" name="email" type="email" autocomplete="email" placeholder="name@company.ru"></div>
           <div class="f"><label for="s-cat">Категория товара</label>
@@ -538,7 +540,7 @@
               <option>Спорт и отдых</option><option>Автотовары</option><option>Другое</option>
             </select></div>
           <div class="f full"><label for="s-brands">Бренды и ссылка на прайс</label><textarea id="s-brands" name="brands" placeholder="Какие бренды предлагаете, ссылка на каталог или прайс"></textarea></div>
-          <label class="consent" for="s-consent"><input id="s-consent" type="checkbox" required> <span>Даю <a href="consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a> в соответствии с <a href="privacy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a></span></label>
+          <label class="consent" for="s-consent"><input id="s-consent" type="checkbox" name="consent" value="yes" required> <span>Даю <a href="consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a> в соответствии с <a href="privacy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a></span></label>
           <div class="form-foot"><button class="btn red" type="submit">Отправить заявку</button><span class="ok" hidden></span></div>
         </form>
       </div>
@@ -616,12 +618,25 @@
     });
   });
   document.querySelectorAll('form').forEach(function(f){
+    var st=f.querySelector('input[name="started"]'); if(st) st.value=String(Date.now());
     f.addEventListener('submit',function(e){
       e.preventDefault();
-      var ok=f.querySelector('.ok'), c=f.querySelector('.consent input');
-      ok.hidden=false;
-      if(c && !c.checked){ ok.textContent='Отметьте согласие на обработку персональных данных.'; return; }
-      ok.textContent='Это демо-форма: на рабочем сайте обращение уйдёт на почту отдела.';
+      var ok=f.querySelector('.ok'), c=f.querySelector('.consent input'), btn=f.querySelector('button[type="submit"]');
+      function show(msg,isErr){ ok.hidden=false; ok.textContent=msg; ok.classList.toggle('err',!!isErr); }
+      if(c && !c.checked){ show('Отметьте согласие на обработку персональных данных.',true); return; }
+      var fl=f.querySelector('input[type="file"]');
+      if(fl && fl.files){ var t=0; for(var i=0;i<fl.files.length;i++) t+=fl.files[i].size;
+        if(fl.files.length>5){ show('Можно приложить не больше 5 файлов.',true); return; }
+        if(t>10*1024*1024){ show('Файлы слишком большие. Можно приложить до 10 МБ.',true); return; } }
+      var label=btn.textContent; btn.disabled=true; btn.textContent='Отправляем…'; ok.hidden=true;
+      fetch('send.php',{method:'POST',body:new FormData(f)})
+        .then(function(r){ return r.json().catch(function(){ return {ok:false,message:'Не удалось отправить. Попробуйте позже или напишите нам на почту.'}; }); })
+        .then(function(d){
+          show(d.message||'', !d.ok);
+          if(d.ok){ f.reset(); if(st) st.value=String(Date.now()); }
+        })
+        .catch(function(){ show('Нет связи с сервером. Проверьте интернет и попробуйте ещё раз.',true); })
+        .finally(function(){ btn.disabled=false; btn.textContent=label; });
     });
   });
 })();
