@@ -19,8 +19,22 @@ function reply(int $code, bool $ok, string $message): void {
     exit;
 }
 
+// Хостинг reg.ru отклоняет multipart/form-data, поэтому форма присылает JSON (файлы в base64).
+$raw  = file_get_contents('php://input');
+$DATA = [];
+if (is_string($raw) && $raw !== '') {
+    $decoded = json_decode($raw, true);
+    if (is_array($decoded)) {
+        $DATA = $decoded;
+    }
+}
+if (!$DATA && !empty($_POST)) {
+    $DATA = $_POST;
+}
+
 function field(string $name, int $max = 2000): string {
-    $v = isset($_POST[$name]) && is_string($_POST[$name]) ? $_POST[$name] : '';
+    global $DATA;
+    $v = isset($DATA[$name]) && is_scalar($DATA[$name]) ? (string) $DATA[$name] : '';
     $v = str_replace("\0", '', $v);
     $v = trim(preg_replace('/\r\n?/', "\n", $v));
     return mb_substr($v, 0, $max);
@@ -103,35 +117,35 @@ if ($type === 'supplier') {
     ];
 }
 
-// Вложения (только для обращений покупателей).
+// Вложения (только для обращений покупателей): [{name, data(base64)}].
 $attachments = [];
-if ($type === 'claim' && !empty($_FILES['files']) && is_array($_FILES['files']['name'])) {
+if ($type === 'claim' && !empty($DATA['files']) && is_array($DATA['files'])) {
+    if (count($DATA['files']) > MAX_FILES) {
+        reply(413, false, 'Можно приложить не больше ' . MAX_FILES . ' файлов.');
+    }
     $total = 0;
-    $count = count($_FILES['files']['name']);
-    for ($i = 0; $i < $count; $i++) {
-        $err = $_FILES['files']['error'][$i];
-        if ($err === UPLOAD_ERR_NO_FILE) continue;
-        if ($err === UPLOAD_ERR_INI_SIZE || $err === UPLOAD_ERR_FORM_SIZE) {
-            reply(413, false, 'Файлы слишком большие. Можно приложить до 10 МБ.');
+    foreach ($DATA['files'] as $f) {
+        if (!is_array($f) || !isset($f['data']) || !is_string($f['data'])) continue;
+        $bin = base64_decode($f['data'], true);
+        if ($bin === false || $bin === '') {
+            reply(400, false, 'Не удалось прочитать файл. Попробуйте приложить его ещё раз.');
         }
-        if ($err !== UPLOAD_ERR_OK) {
-            reply(400, false, 'Не удалось загрузить файл. Попробуйте ещё раз.');
-        }
-        if (count($attachments) >= MAX_FILES) {
-            reply(413, false, 'Можно приложить не больше ' . MAX_FILES . ' файлов.');
-        }
-        $tmp  = $_FILES['files']['tmp_name'][$i];
-        $size = (int) $_FILES['files']['size'][$i];
-        $total += $size;
+        $total += strlen($bin);
         if ($total > MAX_TOTAL_BYTES) {
             reply(413, false, 'Файлы слишком большие. Можно приложить до 10 МБ.');
         }
-        $mime = function_exists('mime_content_type') ? (string) mime_content_type($tmp) : 'application/octet-stream';
+        $mime = 'application/octet-stream';
+        if (function_exists('finfo_open')) {
+            $fi = finfo_open(FILEINFO_MIME_TYPE);
+            $mime = (string) finfo_buffer($fi, $bin);
+            finfo_close($fi);
+        }
         if (!preg_match('#^(image|video)/#', $mime)) {
             reply(415, false, 'Можно прикладывать только фото и видео.');
         }
-        $fname = preg_replace('/[^\p{L}\p{N}._-]+/u', '_', basename((string) $_FILES['files']['name'][$i]));
-        $attachments[] = ['name' => $fname ?: 'file', 'mime' => $mime, 'data' => file_get_contents($tmp)];
+        $name  = isset($f['name']) && is_string($f['name']) ? $f['name'] : 'file';
+        $fname = preg_replace('/[^\p{L}\p{N}._-]+/u', '_', basename($name));
+        $attachments[] = ['name' => $fname ?: 'file', 'mime' => $mime, 'data' => $bin];
     }
 }
 

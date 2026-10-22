@@ -629,7 +629,17 @@
         if(fl.files.length>5){ show('Можно приложить не больше 5 файлов.',true); return; }
         if(t>10*1024*1024){ show('Файлы слишком большие. Можно приложить до 10 МБ.',true); return; } }
       var label=btn.textContent; btn.disabled=true; btn.textContent='Отправляем…'; ok.hidden=true;
-      fetch('send.php',{method:'POST',body:new FormData(f)})
+      var payload={};
+      Array.prototype.forEach.call(f.elements,function(el){
+        if(!el.name || el.type==='file' || el.type==='submit') return;
+        if(el.type==='checkbox'){ if(el.checked) payload[el.name]=el.value; return; }
+        payload[el.name]=el.value;
+      });
+      var files=fl&&fl.files?Array.prototype.slice.call(fl.files):[];
+      Promise.all(files.map(function(file){ return new Promise(function(res,rej){
+        var rd=new FileReader(); rd.onload=function(){ res({name:file.name,data:String(rd.result).split(',')[1]||''}); }; rd.onerror=rej; rd.readAsDataURL(file); }); }))
+        .then(function(list){ if(list.length) payload.files=list;
+          return fetch('send.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}); })
         .then(function(r){ return r.json().catch(function(){ return {ok:false,message:'Не удалось отправить. Попробуйте позже или напишите нам на почту.'}; }); })
         .then(function(d){
           show(d.message||'', !d.ok);
